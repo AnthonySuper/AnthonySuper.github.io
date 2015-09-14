@@ -7,21 +7,42 @@ Anthony Super
 <div class="info">
 
 </div>
-<div class="home"> 
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
+<div class="home">
+  <div id="homepage-tab-container"> 
+    <div class="homepage-tab" id="projects">
+      <h1>Projects</h1>
+      <ul id="project-list">
+      {% for project in site.categories.projects %}
+      <li class="project-item">
+      <a href="{{project.link}}">
+        {% if project.imgname %}
+        <img src="{{site.baseurl}}/projects/assets/{{project.imgname}}">
+        {% else %}
+        <img src="{{site.baseurl}}/projects/assets/notfound.png">
+        {% endif %}
+      <h2>{{ project.name }}<h2>
+        </a>
+        <div class="project-description">
+          {{project.content}}
+        </div>        
+        </li>
+      {% endfor %}
+    </div>
+    <div class="homepage-tab" id="blog-posts">
+      <h1 class="page-heading">Posts</h1>
+      <ul class="post-list">
+        {% for post in site.categories.blog %}
+        <li>
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
   <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
 </div>

@@ -7,3 +7,39 @@
   background-color: #77dd77;
   color: white;
 }
+
+
+#projects{
+  text-align: center;
+}
+
+#project-list{
+  margin: 0px;
+  padding: 10px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row-wrap;
+}
+
+.project-item{
+  margin: none;
+  padding: 10px;
+  flex-grow: 1;
+  img{
+    max-width: 15%;
+    height: auto;
+    display: inline-block;
+  }
+  min-width: 20%;
+}
+
+.project-description{
+  font-size: 1.0rem;
+
+}
+
+@include media-query($on-palm){
+  #project-list{
+    flex-direction: column;
+  }
+}
