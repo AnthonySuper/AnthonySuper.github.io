@@ -1,0 +1,7 @@
+---
+name: "Fatboy"
+link : "https://github.com/AnthonySuper/fatboy"
+imgname: "fatboy.svg"
+---
+
+Fatboy is a simple view manager, written in Ruby.

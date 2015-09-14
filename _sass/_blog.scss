@@ -1,0 +1,37 @@
+#blog-header{
+  color: white;
+  background-color: #B4CFEC;
+  text-align: center;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 50px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  font-weight: lighter;
+}
+#blog-posts-container{
+  padding-top: 20px;
+  background-color: #B4BDED;
+  height: 100%;
+}
+
+#blog-posts{
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+.blog-read-more{
+  text-align: right;
+}
+
+.blog-post{
+  h2{
+    text-align: center;
+  }
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+  width: 32%;
+
+}
+

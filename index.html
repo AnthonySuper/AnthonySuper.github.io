@@ -12,7 +12,7 @@ Anthony Super
     <div class="homepage-tab" id="projects">
       <h1>Projects</h1>
       <ul id="project-list">
-      {% for project in site.categories.projects %}
+      {% for project in site.categories.projects reversed %}
       <li class="project-item">
       <a href="{{project.link}}">
         {% if project.imgname %}
@@ -28,22 +28,25 @@ Anthony Super
         </li>
       {% endfor %}
     </div>
-    <div class="homepage-tab" id="blog-posts">
-      <h1 class="page-heading">Posts</h1>
-      <ul class="post-list">
-        {% for post in site.categories.blog %}
-        <li>
+    <div class="homepage-tab" id="homepage-blog-posts">
+      <a href="/blog"><h1>Blog</h1></a>
+      <ul id="post-list">
+        {% for post in site.categories.blog %} 
+        <li class="post-item">
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>
+        <div class="post-preview">
+          {{ post.excerpt }}
+        </div>
         </div>
         </li>
         {% endfor %}
       </ul>
     </div>
   </div>
-  <footer>
+  <footer id="frontpage-footer">
   <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
   </footer>
 </div>

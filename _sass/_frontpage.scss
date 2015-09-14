@@ -1,3 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+#frontpage-footer{
+  padding: 20px;
+  text-align: right;
+  background-color: #DE78DE;
+  color: white;
+  a{
+    color: #78DEDE;
+  }
+}
 #frontpage-header{
   padding: 20px;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -15,7 +28,6 @@
 
 #project-list{
   margin: 0px;
-  padding: 10px;
   list-style-type: none;
   display: flex;
   flex-direction: row;
@@ -23,16 +35,15 @@
 }
 
 .project-item{
-  margin: none;
+  margin-left: 5px;
+  margin-right: 5px;
   padding: 10px;
-  flex-grow: 1;
   img{
     max-width: 15%;
     height: auto;
     display: inline-block;
-  }
-  min-width: 20%;
-  width: 150px;
+}
+
 }
 
 .project-description{
@@ -40,17 +51,36 @@
 }
 
 #post-list{
+  margin: 0px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   flex-flow: flex-start;
+  list-style-type: none;
+}
+
+.post-item{
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  display: inline-block;
+}
+@media all and (min-width: $on-palm){
+  .project-item{
+    width: 32%;
+}
+.post-item{
+  width: 20%;
+}
 }
 
 @include media-query($on-palm){
   #project-list{
     flex-direction: column;
-  }
-  .project-item{
-    width: 100%;
-  }
+}
+.project-item{
+  margin: 0;
+  padding: 10px;
+}
 }

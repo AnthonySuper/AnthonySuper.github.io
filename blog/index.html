@@ -1,0 +1,27 @@
+---
+layout: frontpage
+title: "Blog"
+---
+<header id="blog-header">
+Blog
+</header>
+
+<div id="blog-posts-container">
+  <ul id="blog-posts">
+    {% for post in site.categories.blog %}
+    <li class="blog-post">
+    <a href="{{post.url | prepend: site.baseurl}}">
+      <h2>{{post.title}}</h2>
+    </a>
+    <div class="blog-post-excerpt">
+      {{post.excerpt}}
+    </div>
+    <div class="blog-read-more">
+      <a href="{{post.url | prepend: site.baseurl}}">
+        Read more
+      </a>
+    </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
