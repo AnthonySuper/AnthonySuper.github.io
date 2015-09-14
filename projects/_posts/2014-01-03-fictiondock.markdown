@@ -1,5 +1,5 @@
 ---
-name: "FictionDock"
+name: "Fiction Dock"
 link: "http://www.fictiondock.com"
 imgname: "fictiondock.svg"
 ---

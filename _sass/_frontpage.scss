@@ -9,7 +9,7 @@
 }
 
 
-#projects{
+.homepage-tab{
   text-align: center;
 }
 
@@ -18,7 +18,8 @@
   padding: 10px;
   list-style-type: none;
   display: flex;
-  flex-direction: row-wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .project-item{
@@ -31,15 +32,25 @@
     display: inline-block;
   }
   min-width: 20%;
+  width: 150px;
 }
 
 .project-description{
   font-size: 1.0rem;
+}
 
+#post-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: flex-start;
 }
 
 @include media-query($on-palm){
   #project-list{
     flex-direction: column;
+  }
+  .project-item{
+    width: 100%;
   }
 }
