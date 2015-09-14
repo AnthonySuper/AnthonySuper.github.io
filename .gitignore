@@ -1,2 +1,2 @@
-.DS_STORE
-.sass-cache/*
+_site
+.sass-cache
