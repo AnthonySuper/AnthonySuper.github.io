@@ -29,13 +29,16 @@ navname: "Home"
       <a href="/blog"><h1>Blog</h1></a>
       <ul id="post-list">
         {% for post in site.categories.blog %} 
-        <li class="post-item">
+        <li class="blog-post">
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>
         <div class="post-preview">
           {{ post.excerpt }}
+        </div>
+        <div class="blog-read-more">
+          <a href="{{ post.url | prepend: site.baseurl }}">Read more</a>
         </div>
         </div>
         </li>

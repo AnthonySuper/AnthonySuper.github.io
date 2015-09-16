@@ -10,7 +10,7 @@
 }
 #blog-posts-container{
   padding-top: 20px;
-  height: 100%;
+  min-height: 100%;
 }
 
 #blog-posts{
@@ -36,6 +36,5 @@
   .blog-post{
     width: 48%;
     margin: 10px;
-    border: 1px solid black;
   }
 }

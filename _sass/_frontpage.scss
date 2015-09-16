@@ -23,7 +23,7 @@
     max-width: 15%;
     height: auto;
     display: inline-block;
-}
+  }
 
 }
 
@@ -40,14 +40,15 @@
   list-style-type: none;
 }
 
+.post-preview{
+  text-align: justify;
+}
 .post-item{
-  margin: 20px;
+  margin: 30px;
   padding: 10px;
-  border: 1px solid #333;
-  border-radius: 5px;
   display: inline-block;
 }
-@media all and (min-width: $on-palm){
+@media all and (min-width: $on-laptop){
   .project-item{
     width: 32%;
 }
@@ -56,12 +57,13 @@
 }
 }
 
-@include media-query($on-palm){
+@include media-query($on-laptop){
   #project-list{
     flex-direction: column;
 }
 .project-item{
   margin: 0;
   padding: 10px;
+  width: 100%;
 }
 }

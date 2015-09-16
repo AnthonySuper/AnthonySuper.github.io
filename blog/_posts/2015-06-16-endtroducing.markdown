@@ -15,7 +15,7 @@ With that in mind, let us discuss one of my favorite albums:
 <div class="center-box">
 <img src="/blog/assets/endtroducing.jpg" class="inset-image">
 </div>
-
+<!--more-->
 This is the cover to <a href="https://en.wikipedia.org/wiki/Endtroducing.....">Endtroducing</a>, by <a href="https://en.wikipedia.org/wiki/DJ_Shadow">DJ Shadow.</a>
 It is a mostly instrumental hip-hop album featuring heavy use of sampling.
 

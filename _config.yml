@@ -10,3 +10,5 @@ github_username:  anthonysuper
 #Build settings
 markdown: kramdown
 highlighter: pygments
+
+excerpt_separator: "<!--more-->"
