@@ -10,7 +10,6 @@
 }
 #blog-posts-container{
   padding-top: 20px;
-  background-color: #B4BDED;
   height: 100%;
 }
 
@@ -18,7 +17,9 @@
   display: flex;
   flex-direction: row;
   list-style-type: none;
+  margin: 0;
 }
+
 .blog-read-more{
   text-align: right;
 }
@@ -27,11 +28,14 @@
   h2{
     text-align: center;
   }
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
   background-color: white;
-  width: 32%;
-
 }
 
+@media all and (min-width: $on-laptop){
+  .blog-post{
+    width: 48%;
+    margin: 10px;
+    border: 1px solid black;
+  }
+}

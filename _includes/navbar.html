@@ -1,0 +1,15 @@
+
+<nav id="page-links">
+<ul>
+  {% for page in site.pages %}
+  {% if page.navname %}
+  <li>
+  <a class="page-link" href="{{ page.url | prepend: site.baseurl}}">
+    {{page.navname}}
+  </a>
+  </li>
+
+  {% endif %}
+  {% endfor %}
+</ul>
+</nav>

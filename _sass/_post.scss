@@ -1,0 +1,20 @@
+#post-header{
+  text-align: center;
+  font-size: 20px;
+  font-weight: lighter;
+  padding: 5px;
+}
+
+.post{
+  margin-top: 10px;
+  margin-left: 20vw;
+  margin-right: 20vw;
+}
+
+@include media-query($on-laptop){
+  .post{
+    margin-left: 2vw;
+    margin-right: 2vw;
+    font-size: 1.2rem;
+  }
+}
