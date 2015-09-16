@@ -11,6 +11,15 @@
   margin-right: 20vw;
 }
 
+.center-box{
+  text-align: center;
+}
+
+.inset-image{
+  display: inline;
+  box-shadow: 3px 4px 10px #333;
+  margin: 10px;
+}
 @include media-query($on-laptop){
   .post{
     margin-left: 2vw;
