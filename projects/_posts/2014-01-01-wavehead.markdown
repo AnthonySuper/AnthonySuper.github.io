@@ -1,7 +1,7 @@
 ---
 name: "WavHead"
 link: "http://www.noided.media/WavHead/"
-imgname: "wavhead.png"
+imgname: "wavhead.svg"
 ---
 
 WavHead is a democratic DJ. I served as its lead backend developer.
