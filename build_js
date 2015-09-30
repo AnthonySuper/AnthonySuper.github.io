@@ -1,0 +1,2 @@
+#!/bin/bash
+browserify _es6/main.js -t babelify -o js/main.js
