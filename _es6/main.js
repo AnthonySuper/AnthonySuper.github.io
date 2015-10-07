@@ -1,4 +1,5 @@
 import {ImagePreview} from './image_preview';
+import {CanvasTest} from './canvas_test';
 
 document.addEventListener("DOMContentLoaded", function(event){
   var imgs = document.getElementsByClassName("inset-image");
@@ -10,4 +11,9 @@ document.addEventListener("DOMContentLoaded", function(event){
     var handler = new ImagePreview(img);
     handler.registerListener();
   });
+  var f = document.getElementById("testing-canvas");
+  if(f){
+    console.log("Got a canvas: f");
+    new CanvasTest(f, "/assets/tubahat.jpg");
+  }
 });
