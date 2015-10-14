@@ -1,0 +1,50 @@
+---
+title: Tables
+layout: post
+categories: ["web development", "programming", "required_for_class"]
+---
+
+I've been using this web page for my [CS192](http://www.cs.colostate.edu/~cs192/.Fall15/) class at Colorado State University.
+As part of one of the assignments, I have to use a table.
+So there's a table after the break.
+
+<!--more-->
+
+<img src="/blog/assets/table.jpg">
+
+<br>
+...
+<br>
+
+What, that's not enough?
+
+Fine.
+
+<table class="full-table">
+<tr>
+  <th>Interest</th>
+  <th>Amount of Interest</th>
+  <th>Time taken</th>
+</tr>
+<tr>
+  <td>Web Development</td>
+  <td>A lot</td>
+  <td>Also a lot</td>
+</tr>
+<tr>
+  <td>Music</td>
+  <td>A lot</td>
+  <td>Not as much</td>
+<tr>
+<tr>
+  <td>Game Development</td>
+  <td>A fair amount</td>
+  <td>Next to zero</td>
+</tr>
+<tr>
+  <td>Physics</td>
+  <td>Not high</td>
+  <td>A lot—my physics class is hard</td>
+</tr>
+
+</table>
