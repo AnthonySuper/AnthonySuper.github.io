@@ -1,47 +1,26 @@
-#blog-header{
-  color: white;
-  background-color: #B4CFEC;
-  text-align: center;
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
-  font-size: 50px;
-  padding-top: 5px;
-  padding-bottom: 10px;
-  font-weight: lighter;
-}
-#blog-posts-container{
-  padding-top: 20px;
-  min-height: 100%;
+.blog-posts-list{
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#blog-posts{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: baseline;
-  align-content: flex-start;
+.blog-header-link{
+  h1{
+    text-align: center;
+  }
+}
+
+.blog-posts-list-item{
   list-style-type: none;
-  margin: 0;
-}
-
-.blog-read-more{
-  text-align: right;
+  border: 1px solid black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
 }
 
 .blog-post{
-  h2{
-    text-align: center;
-  }
-  padding: 20px;
-  background-color: white;
-  width: 100%;
-  display: block;;
-}
-
-@media all and (min-width: $on-laptop){
-  .blog-post{
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
+  max-width: 900px;
+  padding: 10px;
+  margin-right: auto;
+  margin-left: auto;
 }
