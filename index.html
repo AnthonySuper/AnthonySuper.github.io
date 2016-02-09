@@ -5,45 +5,30 @@ navname: "Home"
 ---
 
 <div class="home">
-  <div id="homepage-tab-container"> 
-    <div class="homepage-tab" id="projects">
-      <h1>Projects</h1>
-      <ul id="project-list">
-      {% for project in site.categories.projects reversed %}
-      <li class="project-item">
-      <a href="{{project.link}}">
-        {% if project.imgname %}
-        <img src="{{site.baseurl}}/projects/assets/{{project.imgname}}">
-        {% else %}
-        <img src="{{site.baseurl}}/projects/assets/notfound.png">
-        {% endif %}
-      <h2>{{ project.name }}<h2>
-        </a>
-        <div class="project-description">
-          {{project.content}}
-        </div>        
-        </li>
-      {% endfor %}
-    </div>
-    <div class="homepage-tab" id="homepage-blog-posts">
-      <a href="/blog"><h1>Blog</h1></a>
-      <ul id="post-list">
-        {% for post in site.categories.blog %} 
-        <li class="blog-post">
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  <div class="homepage-section" id="homepage-blog-posts">
+    <a class="blog-header-link" href="/blog"><h1>Blog</h1></a>
+    <ul class="blog-posts-list">
+      {% for post in site.categories.blog limit:2 %}
+      <li class="blog-posts-list-item">
+        <span class="blog-post-date">
+          {{ post.date | date: "%b %-d, %Y"}}
+        </span>
         <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+          <a class="blog-post-link"
+            href="{{ post.url | prepend: site.baseurl }}">
+            {{post.title}}
+          </a>
         </h2>
-        <div class="post-preview">
+        <div class="blog-post-preview">
           {{ post.excerpt }}
         </div>
-        <div class="blog-read-more">
-          <a href="{{ post.url | prepend: site.baseurl }}">Read more</a>
+        <div class="blog-post-read-more">
+          <a href="{{ post.url | prepend: site.baseurl}}">
+            Read More
+          </a>
         </div>
-        </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>

@@ -3,22 +3,29 @@ layout: indexpage
 navname: "Blog"
 title: "Blog"
 ---
-<div id="blog-posts-container">
-  <ul id="blog-posts">
-    {% for post in site.categories.blog %}
-    <li class="blog-post">
-    <a href="{{post.url | prepend: site.baseurl}}">
-      <h2>{{post.title}}</h2>
-    </a>
-    <div class="blog-post-excerpt">
-      {{post.excerpt}}
+
+<a class="blog-header-link" href="/blog"><h1>Blog</h1></a>
+<ul class="blog-posts-list">
+  {% for post in site.categories.blog %}
+  <li class="blog-posts-list-item">
+    <span class="blog-post-date">
+      {{ post.date | date: "%b %-d, %Y"}}
+    </span>
+    <h2>
+      <a class="blog-post-link"
+        href="{{ post.url | prepend: site.baseurl }}">
+        {{post.title}}
+      </a>
+    </h2>
+    <div class="blog-post-preview">
+      {{ post.excerpt }}
     </div>
-    <div class="blog-read-more">
-      <a href="{{post.url | prepend: site.baseurl}}">
-        Read more
+    <div class="blog-post-read-more">
+      <a href="{{ post.url | prepend: site.baseurl}}">
+        Read More
       </a>
     </div>
-    </li>
-    {% endfor %}
-  </ul>
-</div>
+  </li>
+  {% endfor %}
+</ul>
+

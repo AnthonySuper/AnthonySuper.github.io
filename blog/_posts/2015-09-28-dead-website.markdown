@@ -22,7 +22,8 @@ Then again, that's probably a good thing.
 This particular website, however, is different.
 I don't get a touch of joyful nostalgia.
 Instead, I get... a little creeped out.
-<!--more-->
+
+<!-- more -->
 
 You see, this isn't just "Bob's Blog (Now with 100% more animated skeleton gifs!)". 
 This is a website about dead things, abandoned things.
