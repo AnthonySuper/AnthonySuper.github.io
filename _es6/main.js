@@ -1,5 +1,7 @@
 import {ImagePreview} from './image_preview';
 import {CanvasTest} from './canvas_test';
+import './gpg_key';
+import './frontpage_tabs';
 
 document.addEventListener("DOMContentLoaded", function(event){
   var imgs = document.getElementsByClassName("inset-image");

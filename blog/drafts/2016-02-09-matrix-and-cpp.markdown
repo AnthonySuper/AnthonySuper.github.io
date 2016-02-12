@@ -4,7 +4,6 @@ layout: post
 categories: ["math", "programming", "c++"]
 ---
 
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 This semester, I enrolled in a linear algebra class in college.
 I was having some trouble learning it, so I figured I might as well expand my knowledge by writing a program.
