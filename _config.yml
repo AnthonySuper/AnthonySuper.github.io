@@ -8,7 +8,8 @@ twitter_username: anthonysuper1
 github_username:  anthonysuper
 
 #Build settings
-markdown: redcarpet
+markdown: kramdown
+  input: GFM
 highlighter: rouge
 
 excerpt_separator: "<!--more-->"
