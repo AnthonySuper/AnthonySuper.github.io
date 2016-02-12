@@ -101,6 +101,92 @@ exports.CanvasTest = CanvasTest;
 },{}],2:[function(require,module,exports){
 "use strict";
 
+function hideAllItems() {
+  console.log("Hiding all bio sections");
+  var i = document.getElementsByClassName("bio-section-active");
+  console.log("Got active elements:", i);
+  Array.prototype.slice.call(i).forEach(function (item) {
+    item.className = item.className.replace("bio-section-active", "");
+    item.className = item.className + " bio-section-hidden";
+  });
+  var s = document.getElementById("bio-sections-list");
+  var heads = s.getElementsByClassName("active");
+  Array.prototype.slice.call(heads).forEach(function (item) {
+    item.className = "";
+  });
+}
+
+function showSection(section, event) {
+  hideAllItems();
+  this.className += " active";
+  section.className += " bio-section-active";
+  section.className = section.className.replace("bio-section-hidden", "");
+}
+
+function addListener(n) {
+  var id = n.dataset.headerFor;
+  var lists = document.getElementsByClassName("bio-section");
+  lists = Array.prototype.slice.call(lists);
+  lists.forEach(function (item) {
+    if (id == item.dataset.tabId) {
+      n.addEventListener("click", showSection.bind(n, item));
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var elm = document.getElementById("bio-sections-list");
+  var list = elm.getElementsByTagName("li");
+  for (var i = 0; i < list.length; i++) {
+    addListener(list[i]);
+  }
+});
+
+},{}],3:[function(require,module,exports){
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GPGKeyDisplay = (function () {
+  function GPGKeyDisplay(element) {
+    _classCallCheck(this, GPGKeyDisplay);
+
+    this.elm = element;
+  }
+
+  _createClass(GPGKeyDisplay, [{
+    key: "takeControl",
+    value: function takeControl() {
+      console.log("Taking control with", this.elm);
+      var show = this.elm.getElementsByClassName("gpg-show-key")[0];
+      console.log("Got show element", show);
+      show.addEventListener("click", this.showKey.bind(this));
+    }
+  }, {
+    key: "showKey",
+    value: function showKey() {
+      console.log("Showing key", this);
+      var s = this.elm.getElementsByClassName("gpg-key-content")[0];
+      s.className = s.className.replace(/key-hidden/, "");
+    }
+  }]);
+
+  return GPGKeyDisplay;
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+  var el = document.getElementsByClassName("gpg-key");
+  for (var i = 0; i < el.length; i++) {
+    var s = new GPGKeyDisplay(el[i]);
+    s.takeControl();
+  }
+});
+
+},{}],4:[function(require,module,exports){
+"use strict";
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -159,12 +245,16 @@ var ImagePreview = (function () {
 
 exports.ImagePreview = ImagePreview;
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';
 
 var _image_preview = require('./image_preview');
 
 var _canvas_test = require('./canvas_test');
+
+require('./gpg_key');
+
+require('./frontpage_tabs');
 
 document.addEventListener("DOMContentLoaded", function (event) {
   var imgs = document.getElementsByClassName("inset-image");
@@ -183,4 +273,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 
-},{"./canvas_test":1,"./image_preview":2}]},{},[3]);
+},{"./canvas_test":1,"./frontpage_tabs":2,"./gpg_key":3,"./image_preview":4}]},{},[5]);

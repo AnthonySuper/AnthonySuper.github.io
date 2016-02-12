@@ -1,10 +1,29 @@
 ---
-layout: indexpage
 title: "Anthony Super"
-navname: "Home"
+navname: home
+layout: indexpage
 ---
 
 <div class="home">
+  <article id="frontpage-info">
+    <ul id="bio-sections-list">
+      <li class="active" data-header-for="1">
+        <h2>About</h2>
+      </li>
+      <li data-header-for="2">
+        <h2>GPG Keys</h2>
+      </li>
+      <li data-header-for="3">
+        <h2>Elsewhere</h2>
+      </li>
+    </ul>
+    <div class="section-content">
+      {% include about_section.html %}
+      {% include key_section.html %}
+      {% include elsewhere.html %}
+    </div>
+  </article>
+
   <div class="homepage-section" id="homepage-blog-posts">
     <a class="blog-header-link" href="/blog"><h1>Blog</h1></a>
     <ul class="blog-posts-list">
