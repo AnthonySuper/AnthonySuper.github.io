@@ -10,6 +10,10 @@ github_username:  anthonysuper
 #Build settings
 markdown: kramdown
 
+kramdown:
+  input: GFM 
+  hard_wrap: false
+
 highlighter: rouge
 
 excerpt_separator: "<!--more-->"
