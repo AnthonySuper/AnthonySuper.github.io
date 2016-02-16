@@ -494,7 +494,7 @@ A template is a good choice here, so we don't have to duplicate code all over th
 Of course, we don't want to enable values of arbitrary type to be multiplied with matrices—we just want to enable numbers. 
 Helpfully, C++'s standard library has a type trait, [std::is_arithmetic](http://en.cppreference.com/w/cpp/types/is_arithmetic), which describes exactly that.
 
-I initially wanted to use `std::enable_if` to constrain the template argument using std::enable_if, but I couldn't figure out how to do it.
+I initially wanted to use `std::enable_if` to constrain the template argument, but I couldn't figure out how to do it.
 When I read a little further into it, I realized it was probably the wrong tool for the job.
 Instead, I decided to use `static_assert`.
 
