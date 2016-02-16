@@ -11,7 +11,7 @@ I picked C++ to be the language for this, mostly for speed, but partially becaus
 Of course, my version isn't going to be nearly as fast as the hyper-optimized libraries the pros write, but that's fine.
 This is just a learning project, after all.
 
-<!-- more -->
+<!--more-->
 
 
 # Starting Off
