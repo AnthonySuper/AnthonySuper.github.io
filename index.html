@@ -29,15 +29,17 @@ layout: indexpage
     <ul class="blog-posts-list">
       {% for post in site.categories.blog limit:2 %}
       <li class="blog-posts-list-item">
-        <span class="blog-post-date">
-          {{ post.date | date: "%b %-d, %Y"}}
-        </span>
-        <h2>
-          <a class="blog-post-link"
-            href="{{ post.url | prepend: site.baseurl }}">
-            {{post.title}}
-          </a>
-        </h2>
+        <div class="blog-posts-list-header">
+          <h2>
+            <a class="blog-post-link"
+              href="{{ post.url | prepend: site.baseurl }}">
+              {{post.title}}
+            </a>
+          </h2>
+          <span class="blog-post-date">
+            {{ post.date | date: "%b %-d, %Y"}}
+          </span>
+        </div>
         <div class="blog-post-preview">
           {{ post.excerpt }}
         </div>

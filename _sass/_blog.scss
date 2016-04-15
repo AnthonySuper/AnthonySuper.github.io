@@ -10,6 +10,23 @@
   }
 }
 
+.blog-posts-list-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px;
+
+  h2 {
+    margin-bottom: 5px;
+  }
+
+  @include media-query($on-palm) {
+    flex-direction: column;
+  }
+
+}
+
 .blog-posts-list-item{
   list-style-type: none;
   border: 1px solid black;
