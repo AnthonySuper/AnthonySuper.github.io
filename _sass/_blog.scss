@@ -2,12 +2,26 @@
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+  background-color: white;
+
 }
 
 .blog-header-link{
   h1{
     text-align: center;
   }
+}
+
+.blog-post-title {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 2.0rem;
+}
+
+.blog-post-date {
+  display: block;
+  text-align: right;
+  padding-bottom: 5px;
 }
 
 .blog-posts-list-header {
@@ -29,10 +43,13 @@
 
 .blog-posts-list-item{
   list-style-type: none;
-  border: 1px solid black;
   margin-top: 5px;
   margin-bottom: 5px;
-  padding: 5px;
+  padding: 10px;
+
+  &:not(:last-of-type) {
+    border-bottom: 3px solid black;
+  }
 }
 
 .blog-post{
