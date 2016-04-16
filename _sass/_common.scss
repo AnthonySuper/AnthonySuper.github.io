@@ -61,6 +61,9 @@ a {
 }
 
 #page-links{
+  position: -webkit-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
   position: sticky;
   top: 0px;
   font-size: 14px;
