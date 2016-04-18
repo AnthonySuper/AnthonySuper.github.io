@@ -66,9 +66,11 @@ a {
   position: -o-sticky;
   position: sticky;
   top: 0px;
+  z-index: 1000;
   font-size: 14px;
   text-align: center;
   background-color: $color-primary-3;
+
   ul{
     margin: auto;
     max-width: 700px;
