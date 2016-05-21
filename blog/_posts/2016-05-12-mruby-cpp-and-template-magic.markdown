@@ -4,7 +4,7 @@ layout: post
 categories: ["programming", "c++", "ruby"]
 ---
 
-For the past few days I've been trying my hand at making a simple 2D game engine.
+For the past few days I've been trying my hand at making a [simple 2D game engine.](https://github.com/AnthonySuper/Experimental-2D-Engine)
 It's a challenge that involves math and programming, two subjects I greatly enjoy.
 
 I decided early on that I would use Ruby as the engine's scripting language.
