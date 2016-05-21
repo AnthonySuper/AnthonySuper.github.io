@@ -56,4 +56,31 @@
   padding: 10px;
   margin-right: auto;
   margin-left: auto;
+  min-height: 79vh;
+}
+
+.row-images {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  img {
+    flex-shrink: 1;
+    max-height: 100%;
+    max-width: 100%;
+  }
+}
+
+.column-caption {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    margin-top: 4px;
+    display: block;
+    font-weight: lighter;
+    text-align: center;
+    color: #888;
+    font-style: italic;
+  }
 }
