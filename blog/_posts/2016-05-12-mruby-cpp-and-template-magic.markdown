@@ -114,9 +114,6 @@ Well, maybe, but doing so just breaks it in a different way.
 See, i need to take a pointer to this value, and (as far as I can tell), `constexpr` doesn't let you do that.
 The error message actually just claimed that it had no such member when I tried to take a pointer, even though just printing the values worked.
 
-<img src="/assets/kanye.gif" />
-
-
 Ah well.
 
 I also figured out that I'd need to initialize this member outside of the header file.
