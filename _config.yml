@@ -1,7 +1,8 @@
 # Site settings
 title: Anthony Super
 description: > # this means to ignore newlines until "baseurl:"
-  Programming thoughts from Anthony Super
+  Personal Blog of Anthony Super, CEO of Noided Media. 
+  Includes articles on startups, programming, life, humor, and music.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://anthony.noided.media" # the base hostname & protocol for your site
 twitter_username: anthonysuper1
