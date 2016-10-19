@@ -5,7 +5,7 @@ title: "Blog"
 ---
 
 <ul class="blog-posts-list">
-  {% for post in site.categories.blog %}
+  {% for post in paginator.posts %}
   <li class="blog-posts-list-item">
     <div class="blog-posts-list-header">
       <h2>
@@ -30,3 +30,22 @@ title: "Blog"
   {% endfor %}
 </ul>
 
+<ul class="pagination">
+
+  {% if paginator.next_page %}
+  <li class="next">
+    <a href="{{ paginator.next_page_path }}" class="next">
+      Next &rarr;
+   </a>
+  </li>
+  {% endif %}
+
+  {% if paginator.previous_page %}
+  <li class="previous">
+    <a href="{{ paginator.previous_page_path }}" class="previous">
+      &larr; Previous
+    </a>
+  </li>
+  {% endif %}
+
+</ul>

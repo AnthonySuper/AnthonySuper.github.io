@@ -84,3 +84,19 @@
     font-style: italic;
   }
 }
+
+.pagination {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+  list-style-type: none;
+  display: flex;
+  .next {
+    margin-left: auto;
+  }
+
+  .previous {
+    margin-right: auto;
+  }
+}

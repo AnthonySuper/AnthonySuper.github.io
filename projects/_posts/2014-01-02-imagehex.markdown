@@ -1,8 +1,0 @@
----
-name: "ImageHex"
-link: "http://www.imagehex.com"
-imgname: "imagehex.svg"
----
-
-ImageHex is a better way to buy and sell art.
-I served as its lead backend developer.
