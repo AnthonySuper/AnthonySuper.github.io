@@ -12,6 +12,7 @@ I really, really like Ruby.
 I don't think it's perfect for all tasks---hell, I think it's downright *terrible* in some contexts---but I do think it is a fantastic language, and it's probably my favorite to write.
 This blog post is going to serve as a bit of a high-level introduction to Ruby as a language, as well as a justification for my fanboy-ism.
 
+
 <!--more-->
 
 ## Dynamically-typed for a reason
