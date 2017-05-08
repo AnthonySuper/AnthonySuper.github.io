@@ -1,0 +1,62 @@
+---
+title: "An alternative way to Memoize in Ruby"
+layout: post
+tags: ["thoughts", "programming", "writing"]
+---
+
+
+I was screwing around with Ruby Coroutines, and the concept of coroutines in general, when I came across [this page](http://wiki.c2.com/?CoRoutine).
+It talks about how you can use coroutines to memoize functions.
+Ruby has native coroutines.
+You can guess what happened next.
+
+Here's what I came up with:
+
+```ruby
+class Object
+  def self.fiber_memoize(method_name)
+    meth = self.instance_method(method_name)
+    self.send(:define_method, method_name) do
+      f = Fiber.new do |s|
+        result = meth.bind(self).call
+        loop do
+          Fiber.yield(result)
+        end
+      end
+      self.send(:define_singleton_method, method_name) do
+        f.resume
+      end
+      f.resume
+    end
+  end
+end
+```
+
+This works on an instance-level, which a niave implementation wouldn't.
+It also works by re-defining methods on a per-instance basis when you call them, which is just another example of how much Ruby rocks.
+
+Here's how to use it:
+
+```ruby
+class Factorial
+  def initialize(num)
+    @num = num
+  end
+
+  def result
+    puts "This run is not memoized"
+    (1..@num).inject(:*) || 1
+  end
+
+  fiber_memoize :result
+end
+
+f = Factorial.new(100)
+puts f.result #=> Prints the not memoized message, then the result
+puts f.result #=> Prints the (now memoized) result
+```
+
+Interesting, this is also a way to do memoization in ruby without *any* conditionals, which is pretty neat.
+
+Please never use this in any kind of production environment.
+I'm begging you.
