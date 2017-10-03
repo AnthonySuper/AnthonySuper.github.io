@@ -1,0 +1,1025 @@
+---
+title: "value_ptr"
+layout: post
+categories: ["programming"]
+---
+
+In today's blog post, we're going to discuss the idea of a `value_ptr`.
+Basically, the idea is that it's pointer with value semantics.
+Why would you want this?
+Well, polymorphism for one.
+For another, you could conceivably want to allocate a very large number of some very large objects on the stack (perhaps recursively), and you don't want to cause an overflow.
+
+This has been [implemented before](https://hackernoon.com/value-ptr-the-missing-c-smart-pointer-1f515664153e), but I didn't actually read the source for that.
+Instead, I'll write it myself.
+
+<!--more-->
+
+# Part 1: Initial Attempt
+
+Here was my initial attempt:
+
+```cpp
+namespace nmh {
+    template<typename T>
+    class value_ptr {
+    private:
+        T* pointedAt;
+    public:
+        value_ptr(const value_ptr<T>& other) {
+            pointedAt = new T(other.pointedAt);
+        }
+
+        // note that assigning to a moved-from object is now undefined
+        // behavior, as it will dereference null
+        value_ptr(value_ptr<T>&& other) {
+            pointedAt = other.pointedAt;
+            other.pointedAt = nullptr; 
+        }
+
+        template<typename ...Args>
+        value_ptr(Args && ...args) {
+            pointedAt = new T(std::forward<Args>(args)...);
+        }
+
+
+        value_ptr<T>& operator=(const value_ptr<T>& other) {
+            *pointedAt = *other.pointedAt;
+            return *this;
+        }
+
+        T* operator->() {
+            return pointedAt;
+        }
+
+        ~value_ptr() {
+            if(pointedAt == nullptr) {
+                // nothing for now!
+            }
+            else {
+              delete pointedAt;
+            }
+        }
+    };
+}
+```
+
+I tested this with a simple test program:
+
+```c++
+#include <iostream>
+#include "value_ptr.hpp"
+
+using nmh::value_ptr;
+
+struct foo {
+    int x;
+    int y;
+    foo(int _x, int _y) : x(_x), y(_y) {}
+    foo(const foo&) = default;
+};
+
+int addMembers(value_ptr<foo> in) {
+    return in->x + in->y;
+}
+
+int main() {
+    nmh::value_ptr<foo> ptr(1, 2);
+    std::cout << ptr->x << "\t" << ptr->y << std::endl;
+    int sum = addMembers(ptr);
+    std::cout << sum << std::endl;
+}
+```
+
+However, I kept getting this compiler error:
+
+```bash
+In file included from test.cpp:2:
+./value_ptr.hpp:22:29: error: no matching constructor for initialization of
+      'foo'
+            pointedAt = new T(std::forward<Args>(args)...);
+                            ^ ~~~~~~~~~~~~~~~~~~~~~~~~
+test.cpp:20:26: note: in instantiation of function template specialization
+      'nmh::value_ptr<foo>::value_ptr<nmh::value_ptr<foo> &>' requested here
+    int sum = addMembers(ptr);
+                         ^
+test.cpp:10:5: note: candidate constructor not viable: no known conversion from
+      'nmh::value_ptr<foo>' to 'const foo' for 1st argument
+    foo(const foo&) = default;
+    ^
+test.cpp:9:5: note: candidate constructor not viable: requires 2 arguments, but
+      1 was provided
+    foo(int _x, int _y) : x(_x), y(_y) {}
+    ^
+1 error generated.
+```
+
+This was very confusing at first.
+However, it turns out that the template argument will have precedence over any of the constructors I defined.
+Why?
+Well, for some reason, the compiler would not automatically convert the copy-constructor argument `value_ptr<T>&` to `const value_ptr<T>&`.
+I suspect this is because it prefers to use a template than to do *any* conversion, no matter how trivial.
+Thankfully, this is an easy fix:
+
+```cpp
+
+namespace nmh {
+    template<typename T>
+    class value_ptr {
+    private:
+        T* pointedAt;
+    public:
+        value_ptr(value_ptr<T> const & other) {
+            pointedAt = new T(*other.pointedAt);
+        }
+        
+        value_ptr(value_ptr<T>& other) {
+            pointedAt = new T(*other.pointedAt);
+        }
+        // note that assigning to a moved-from object is now undefined
+        // behavior, as it will dereference null
+        value_ptr(value_ptr<T>&& other) {
+            pointedAt = other.pointedAt;
+            other.pointedAt = nullptr; 
+        }
+
+        template<typename ...Args>
+        value_ptr(Args && ...args) {
+            pointedAt = new T(std::forward<Args>(args)...);
+        }
+        // other stuff
+    };
+}
+```
+
+# 2: Testing Moves
+Let's make sure moves work, shall we?
+We modify the test program again:
+
+```cpp
+// Previous values
+
+void testMove() {
+    value_ptr<foo> f(10, 11);
+    value_ptr<foo> y = std::move(f);
+    std::cout << y->x << std::endl;
+}
+
+int main() {
+    nmh::value_ptr<foo> ptr(1, 2);
+    std::cout << ptr->x << "\t" << ptr->y << std::endl;
+    int sum = addMembers(ptr);
+    std::cout << sum << std::endl;
+    testMove();
+}
+```
+
+We also change the destructor of value-ptr to check:
+
+```cpp
+        ~value_ptr() {
+            if(pointedAt == nullptr) {
+                std::cout << "Destructing a moved-from object" << std::endl;
+                // nothing for now!
+            }
+            else {
+              delete pointedAt;
+            }
+        }
+```
+
+To what I must admit is my surprise, this has actually worked!
+That's pretty nifty.
+
+# 3: Polymorphism
+
+This is where things get tricky.
+If I want this class to have pointer-value semantics, we need to be able to convert between different types!
+That is, if I have:
+
+```cpp
+#include <iostream>
+#include <string>
+#include "value_ptr.hpp"
+
+struct Animal {
+    virtual bool isAlive() { return true; }
+    virtual std::string speak() = 0;
+};
+
+struct Dog : public Animal {
+    virtual std::string speak() { return "woof!"; }
+};
+
+struct Cat : public Animal {
+    virtual std::string speak() { return "meow!"; }
+};
+```
+
+I want this to work:
+
+```cpp
+value_ptr<Cat> cat;
+value_ptr<Animal> animal = cat;
+std::cout << animal->speak() << std::endl; // prints "meow"
+```
+
+Let's see what errors we get at first:
+
+```
+./value_ptr.hpp:25:29: error: allocating an object of abstract class type
+      'Animal'
+            pointedAt = new T(std::forward<Args>(args)...);
+                            ^
+test.cpp:23:28: note: in instantiation of function template specialization
+      'nmh::value_ptr<Animal>::value_ptr<nmh::value_ptr<Cat> &>' requested here
+    value_ptr<Animal> an = cat;
+                           ^
+test.cpp:9:25: note: unimplemented pure virtual method 'speak' in 'Animal'
+    virtual std::string speak() = 0;
+                        ^
+1 error generated.
+```
+
+That's pretty nasty.
+Alright, let's see what we can do!
+First, let's create a new copy constructor, which takes a reference to a `value_ptr` of any *subclass* of the contianed class:
+
+```cpp
+        template<typename O>
+        value_ptr(value_ptr<O>& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>, 
+                                            int> v = 0) {
+            pointedAt = new O(*o.pointedAt);
+        }
+```
+We use `enable_if` here to ensure that we only work for sublcasses of T.
+I'm fairly certain this isn't neccisary as we assign pointedAt (type `T*`) to a pointer of type `O*`, which only works if `T` is a base of `O`, but we'll leave it in.
+Now, `pointed_at` is private, so we'll also need to make these classes friends:
+
+```cpp
+    class value_ptr {
+        template<typename O>
+        friend class value_ptr;
+    }
+```
+
+Did you know C++ friends could be templates?
+I certainly didn't!
+
+Defining an equals operator for this is actually pretty damn tricky.
+The problem comes from `enable_if`.
+`operator=` doesn't take two parameters.
+What are we to do?
+
+Well, for some odd reason, it turns out that... we don't need to?
+It's actually somehow working already!
+I can run this test program just fine:
+
+```cpp
+#include <iostream>
+#include <string>
+#include "value_ptr.hpp"
+
+using nmh::value_ptr;
+
+struct Bar{};
+
+struct Animal {
+    virtual bool isAlive() { return true; }
+    virtual std::string speak() = 0;
+    virtual ~Animal() {}
+};
+
+struct Dog : public Animal {
+    virtual std::string speak() { return "woof!"; }
+};
+
+struct Cat : public Animal {
+    virtual std::string speak() { return "meow!"; }
+};
+
+int main() {
+    value_ptr<Cat> cat;
+    value_ptr<Animal> an(cat);
+    value_ptr<Dog> dog;
+    std::cout << an->speak() << std::endl;
+    an = dog;
+    std::cout << an->speak() << std::endl;
+}
+```
+
+I did some research into this, and this is what's happening:
+
+1. The compiler tries to find `operator=` that fits type `value_ptr<Dog>` and failes
+2. The compiler now tries to find a way to turn `value_ptr<Dog>` into something we can actually use
+3. There's a single-argument constructor for a `value_ptr<Animal>`, which is not marked explicit, and we have an `operator=` overload for `value_ptr<Animal>`
+4. The compiler calls this, then calls `operator=(value_ptr<Animal>)`
+
+This isn't the behavior we want.
+It makes a temporary object needlessly.
+So, let's fix it by creating new assignment operators:
+
+```cpp
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+                                  value_ptr<T>&>
+        operator=(const value_ptr<O>& other) {
+            std::cout << "template" << std::endl;
+            *pointedAt = *other.pointedAt;
+            return *this;
+        }
+```
+
+# 4. Fixing the Slicing Problem
+
+It's at about this time that I realized I had a huge mistake in my code: it slices!
+More specifically, the line:
+
+```cpp
+*pointedAt = *other.pointedAt;
+```
+
+Will actually make a copy of the animal.
+Gross!
+Let's make it non-slicing by allocating a new object, and deleting the old one:
+
+```cpp
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+                                  value_ptr<T>&>
+        operator=(const value_ptr<O>& other) {
+            if(pointedAt != nullptr) delete pointedAt;
+            pointedAt = new O(*other.pointedAt);
+            return *this;
+        }
+```
+
+Awesome!
+
+# 5. Move assignemnt
+
+We want to be able to move-assign the class as well, to avoid allocating things needlessly.
+Let's do that!
+It's not too hard, we basically make two copies of the `operator=` we already defined that just swap the pointers.
+Very simple:
+
+```cpp
+        value_ptr<T>& operator=(value_ptr<T>&& other) {
+            if(pointedAt != nullptr) delete pointedAt;
+            pointedAt = other.pointedAt;
+            other.pointedAt = nullptr;
+            return *this;
+        }
+
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+                                  value_ptr<T>&>
+        operator=(value_ptr<O>&& other) {
+            if(pointedAt != nullptr) delete pointedAt;
+            pointedAt = other.pointedAt;
+            other.pointedAt = nullptr;
+            return *this;
+        }
+```
+
+While we're at it, let's define a move constructor that takes subclass `value_ptr` as well:
+
+```cpp
+        template<typename O>
+        value_ptr(value_ptr<O>&& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>, 
+                                            int> v = 0) {
+            pointedAt = o.pointedAt;
+            o.pointedAt = nullptr;
+        }
+```
+
+# 6. Deletors
+
+This is where things get tricky.
+
+In C++, if your class has virtual members, your destructor pretty much needs to be virtual.
+Seriously, if it's not, some very nasty things will happen.
+If you have code like this:
+
+```cpp
+struct Animal {
+    virtual std::string speak() = 0;
+};
+
+struct Cat : public Animal {
+    struct PurHelper {
+        size_t purrCount;
+    }
+    PurHelper *helper;
+
+    Cat() {
+        helper = new PurHelper();
+        helper->purrCount = 0;
+    }
+    virtual std::string speak() {
+        return "meow!";
+    }
+
+    ~Cat() {
+        delete helper;
+    }
+}
+
+int main() {
+    Animal *an = new Cat();
+    delete an;
+}
+```
+
+The `PurHelper` object will leak, because `delete an` calls `Animal::~Animal()`, which is **not virutal**.
+This means that `Cat::~Cat()` will never get called!
+
+Interestingly, however, this code doesn't have that problem:
+```cpp
+int main() {
+    std::shared_ptr<Animal> an = std::make_shared<Cat>();
+}
+```
+`Cat::~Cat()` will be called in this case!
+
+The reason for this is that `shared_ptr` stores a special `deleter` object.
+This is basically an object that knows how to delete the pointed-to object when its lifetime ends.
+
+Interestingly, `std::unique_ptr` doesn't share this behavior.
+If you use this function:
+
+```
+int main() {
+    std::unique_ptr<Animal> an = std::make_unique<Cat>();
+}
+```
+
+`~Cat()` will never be called.
+
+Why?
+Well, the logic is that `unique_ptr` should have *almost no runtime cost*.
+It does store a *deleter*, but as *part of the type itself*.
+`shared_ptr` allocates this deleter on the heap, so when you assign `shared_ptr<Animal>` to a `shared_ptr<Cat>`, the pointer to the deleter gets stored as well.
+Meanwhile, the `unique_ptr` stores the deleter as *part of the type*.
+So, when you assign a `unique_ptr<Animal>` to a `unique_ptr<Cat>`, it will actually call the deleter for `unique_ptr<Animal>`, which in this case uses `operator delete`.
+
+Now we have a decision to make: Do we want to provide `shared_ptr`-esque behavior, or `unique-ptr`-esque behavior?
+Well, in this case, I think I have to go with `shared_ptr`-esque behavior.
+This also gives us the chance to implement **custom deleters**, which is always great!
+
+7. Deleters
+
+In order to transparently support custom deleters, we're going to have to use *type erasure*.
+This is needed if we want to be able to use `value_ptr<Cat>` with an arbitrary deleter.
+Sadly, this also means we're going to have to allow deleters to be *passed as arguments*, so our in-place forwarding constructor is going to no longer work&mdash;`value_ptr` is going to have to be construced with a pointer.
+
+Let's first write the structure that type erases deleting for us.
+This is a bit trick to do.
+Using our `Animal` and `Cat` examples from before, we want the following behavior:
+
+```cpp
+value_ptr<Cat> cat (new Cat()); // Makes a `value_ptr<Cat>` with `std::default_delete<Cat>` as the deleter
+value_ptr<Animal> an = cat; // copies the `cat` into a new pointer, and copies the *deleter* into a new pointer
+```
+
+It's easy to see why this is tricky.
+The trivial implementation, without polymorphism, is easy:
+
+```cpp
+class Deleter {
+    public:
+    virtual void delete(T *in) = 0;
+}
+
+template<typename _Deletor>
+class DeleterImpl : public Deleter {
+    public:
+    _Deleter del;
+
+    DeleterImpl(const _Deletor& d) : del(d) {}
+
+    virtual void delete(T *in) {
+        del(in);
+    }
+};
+```
+The problem comes from the signature of the virtual function.
+`T = Animal` in `value_ptr<Animal>`, but `T = Cat` in `value_ptr<Cat>`.
+How can we get around this?
+Well, let me show you the (horrific) solution, then explain why it works.
+First up, brace yourself:
+
+```cpp
+
+namespace nmh {
+    template<typename T>
+    class value_ptr {
+    protected:
+        T* pointedAt;
+        template<typename O>
+        friend class value_ptr;
+        
+        struct value_deleter {
+            virtual void _delete(T* in) = 0;
+            virtual value_deleter* _clone() = 0;
+            virtual ~value_deleter() {}
+        };
+        
+        value_deleter *deleter;
+        
+        template<typename Del = std::default_delete<T>>
+        struct value_deleter_impl : public value_deleter {
+            Del del;
+            value_deleter_impl(const Del& in) : del(in) {}
+            value_deleter_impl(const value_deleter_impl<Del>&) = default;
+            
+            virtual void _delete(T* in) override {
+                del(in);
+            }
+            
+            virtual value_deleter* _clone() override {
+                return new value_deleter_impl<Del>(*this);
+            }
+        };
+        
+        template<typename Other,
+        typename = std::enable_if_t<std::is_base_of_v<Other, T>>>
+        struct converting_deleter : public value_ptr<Other>::value_deleter {
+            value_deleter* del;
+            converting_deleter(value_deleter* _del) : del(_del) {}
+            
+            virtual void _delete(Other* in) override {
+                // by the contract of converting_deleter, this is legitimate:
+                del->_delete(static_cast<T*>(in));
+            }
+            
+            virtual typename value_ptr<Other>::value_deleter* _clone() override {
+                return new converting_deleter(del->_clone());
+            }
+            
+            virtual ~converting_deleter() {
+                delete del;
+            }
+        };
+```
+
+Let's break this down, shall we?
+
+First, we have `value_ptr<T>::value_deleter`.
+This is an abstract type that allows us to perform type erasure.
+It can clone itself (needed to provide value semantics upon copying) and it can delete an object of type `T` you pass in.
+
+Next, we have the specialization of it, `value_ptr<T>::value_deleter_impl<Del>`.
+This is a subclass of `value_deleter` that stores an actual deleter.
+This deleter's type is templated as `Del`, so it can be any input type---lambdas, callable objects, whatever!
+When `_delete(T*)` is called, it uses the deleter on the input pointer, in order to delete it.
+`_clone` returns a clone of the object.
+
+Next, the horrible part: `value_ptr<T>::converting_deleter<O>`.
+This doesn't subclass `value_ptr<T>::value_deleter`, but instead `value_ptr<O>::value_deleter`.
+It's a deleter that works with a `value_ptr` that stores type `O`, where `O` is any superclass of `T`!
+Internally, it stores a `value_ptr<T>::value_deleter*`, then *casts its input pointer* (of type `O*`) to delegate to the actual deleter!
+Essentially, it's a wrapper that tells a `value_ptr<T>` how to delete an object of type `O`.
+
+The rest of the class basically required re-writing for this to work. Let's go over each new member, in order, to see what's changed:
+
+```cpp
+        value_ptr(value_ptr<T> const & other) {
+            pointedAt = new T(*other.pointedAt);
+            deleter = other->deleter._clone();
+        }
+```
+
+This copies the object that `other` points at, and also `other`'s deleter.
+
+```cpp     
+        template<typename O>
+        value_ptr(const value_ptr<O>& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>,
+                  int> v = 0) {
+            pointedAt = new O(*o.pointedAt);
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(o.deleter->_clone());
+        }
+        
+        template<typename O>
+        value_ptr(value_ptr<O>& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>,
+                  int> v = 0) {
+            pointedAt = new O(*o.pointedAt);
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(o.deleter->_clone());
+        }
+        
+```
+This now takes a `value_ptr<O>`, copies it's value, and clones its deleter into a `converting_deleter` so our deleter can use it.
+The `template` is in the place it is so the compiler can parse this weird nested template hell correctly.
+This is pretty simple otherwise.
+
+Slightly harder is this:
+
+```cpp
+        template<typename O>
+        value_ptr(value_ptr<O>&& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>,
+                  int> v = 0) {
+            pointedAt = o.pointedAt;
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(o.deleter);
+            o.pointedAt = nullptr;
+        }
+```
+If we move from another value_ptr, we can copy its `pointedAt` over, as before.
+However, we can also copy its *deleter* over.
+We still need to wrap it into a `converting_deleter`, but we *don't*  need to clone beforehand.
+
+
+```cpp
+        // note that assigning to a moved-from object is now undefined
+        // behavior, as it will dereference null
+        value_ptr(value_ptr<T>&& other) {
+            pointedAt = other.pointedAt;
+            deleter = other.deleter;
+            other.pointedAt = nullptr;
+            other.deleter = nullptr;
+        }
+```
+
+As before, we take over ownership of another `value_ptr<T>`'s `pointedAt` value if it's passed to us after a move.
+We do the same for its deleter.
+
+Now, let's get into the useful constructors, that actually take values.
+
+```cpp  
+        value_ptr(T* _pointedAt) :
+        pointedAt(_pointedAt), deleter(new value_deleter_impl<std::default_delete<T>>(std::default_delete<T>()))
+        {}
+```
+
+In this case, we take over ownership of a given `T` object the user has already allocated.
+We use `std::default_delete` as the deleter, which just calls `operator delete`, a sensible default.
+
+Let's also allow the user to pass in custom deleter:
+
+```cpp
+        template<typename Del>
+        value_ptr(T* _pa, const Del& d) :
+        pointedAt(_pa),
+        deleter(new value_deleter_impl<Del>(d))
+        {}
+```
+
+Cool. Pretty simple and intiutive.
+We modify `operator=` in the exact same way as before, for all the overloads we have:
+
+```cpp        
+        value_ptr<T>& operator=(const value_ptr<T>& other) {
+            *pointedAt = *other.pointedAt;
+            if(deleter != nullptr) delete deleter;
+            deleter = other.deleter;
+            return *this;
+        }
+        
+        value_ptr<T>& operator=(value_ptr<T>&& other) {
+            if(pointedAt != nullptr) deletePointed();
+            if(deleter != nullptr) delete deleter;
+            pointedAt = other.pointedAt;
+            deleter = other.deleter;
+            other.pointedAt = nullptr;
+            other.deleter = nullptr;
+            return *this;
+        }
+```
+
+The `deletePointed` function is new.
+Essentially, it calls `deleter->_delete(pointedAt);`.
+In pervious iterations of `value_ptr`, that line would have read `delete pointedAt`, but now we need to use the custom deleter.
+
+Here's the other `operator=`, for good measure:
+        
+```cpp
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+        value_ptr<T>&>
+        operator=(const value_ptr<O>& other) {
+            if(pointedAt != nullptr) deletePointed();
+            pointedAt = new O(*other.pointedAt);
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(other.deleter->_clone());
+            return *this;
+        }
+        
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+        value_ptr<T>&>
+        operator=(value_ptr<O>&& other) {
+            if(pointedAt != nullptr) deletePointed();
+            if(deleter != nullptr) delete deleter;
+            pointedAt = other.pointedAt;
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(other.deleter);
+            other.pointedAt = nullptr;
+            other.deleter = nullptr;
+            return *this;
+        }
+```
+Fairly simple once again.
+
+Now, our destructor changes a tiny bit:
+
+```cpp
+        ~value_ptr() {
+            if(pointedAt == nullptr) {
+                // nothing for now!
+            }
+            else {
+                deletePointed();
+            }
+            if(deleter != nullptr) {
+                delete deleter;
+            }
+        }
+```
+
+All we really do is remember to delete our deleter. Pretty simple.
+
+# 8. Yet more Errors: `operator=` and copying.
+
+After sleeping on this, I realized that I had yet another error: copying values doesn't neccisarily work correctly.
+Let's have this example:
+
+```cpp
+struct Animal {
+    virtual std::string speak() = 0;
+};
+
+struct Dog : public Animal {
+    bool isGood = true;
+    virtual std::string speak() override {
+        return good ? "Ruff!" : "Growl!";
+    }
+};
+
+struct Cat: public Animal {
+    virtual std::string speak() override {
+        return "purr";
+    }
+}
+
+value_ptr<Animal> broken(value_ptr<Animal> in) {
+    value_ptr<Animal> swap(new Cat());
+    swap = in;
+    return swap;
+}
+
+int main() {
+    value_ptr<Dog> broke(new Dog());
+    auto i = broken(broke);
+}
+
+```
+
+This will eventually call `*pointedAt = *in.pointedAt` in `value_ptr`.
+This is bad, because `pointedAt` is a pointer to type `Cat`, but the object being assigned has type `Dog`.
+To fix this, we need to type-erase the assignment/copying operator as well.
+Let's go and do that:
+
+```cpp
+
+namespace nmh {
+    template<typename T>
+    class value_ptr {
+    protected:
+        T* pointedAt;
+        template<typename O>
+        friend class value_ptr;
+        
+        struct value_deleter {
+            virtual void _delete(T* in) = 0;
+            virtual value_deleter* _clone() = 0;
+            virtual T* clonePointed(T*) = 0;
+            virtual ~value_deleter() {}
+        };
+        
+        value_deleter *deleter;
+        
+        template<typename Del = std::default_delete<T>>
+        struct value_deleter_impl : public value_deleter {
+            Del del;
+            value_deleter_impl(const Del& in) : del(in) {}
+            value_deleter_impl(const value_deleter_impl<Del>&) = default;
+            
+            virtual void _delete(T* in) override {
+                if(in == nullptr) {
+                    throw std::runtime_error("Deleting nullptr");
+                }
+                del(in);
+            }
+
+            virtual T* clonePointed(T* in) override {
+                return new T(*in);
+            }
+            
+            virtual value_deleter* _clone() override {
+                return new value_deleter_impl<Del>(*this);
+            }
+        };
+        
+        template<typename Other,
+        typename = std::enable_if_t<std::is_base_of_v<Other, T>>>
+        struct converting_deleter : public value_ptr<Other>::value_deleter {
+            value_deleter* del;
+            converting_deleter(value_deleter* _del) : del(_del) {}
+            
+            virtual void _delete(Other* in) override {
+                // by the contract of converting_deleter, this is legitimate:
+                del->_delete(static_cast<T*>(in));
+            }
+            
+            virtual typename value_ptr<Other>::value_deleter* _clone() override {
+                return new converting_deleter(del->_clone());
+            }
+
+            virtual Other* clonePointed(Other *in) override {
+                return del->clonePointed(static_cast<T*>(in));
+            }
+            
+            virtual ~converting_deleter() {
+                delete del;
+            }
+        };
+        
+        
+    public:
+        value_ptr(value_ptr<T> const & other) {
+            pointedAt = other.rawClone();
+            deleter = other->deleter._clone();
+        }
+        
+        value_ptr(value_ptr<T>& other) {
+            pointedAt = other.rawClone();
+            deleter = other.deleter->_clone();
+        }
+        
+        template<typename O>
+        value_ptr(const value_ptr<O>& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>,
+                  int> v = 0) {
+            pointedAt = new O(*o.pointedAt);
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(o.deleter->_clone());
+        }
+        
+        template<typename O>
+        value_ptr(value_ptr<O>& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>,
+                  int> v = 0) {
+            pointedAt = new O(*o.pointedAt);
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(o.deleter->_clone());
+        }
+        
+        
+        template<typename O>
+        value_ptr(value_ptr<O>&& o,
+                  typename std::enable_if_t<std::is_base_of_v<T, O>,
+                  int> v = 0) {
+            pointedAt = o.pointedAt;
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(o.deleter);
+            o.pointedAt = nullptr;
+            o.deleter = nullptr;
+        }
+        
+        // note that assigning to a moved-from object is now undefined
+        // behavior, as it will dereference null
+        value_ptr(value_ptr<T>&& other) {
+            pointedAt = other.pointedAt;
+            deleter = other.deleter;
+            other.pointedAt = nullptr;
+            other.deleter = nullptr;
+        }
+        
+        value_ptr(T* _pointedAt) :
+        pointedAt(_pointedAt), deleter(new value_deleter_impl<std::default_delete<T>>(std::default_delete<T>()))
+        {}
+        
+        template<typename Del>
+        value_ptr(T* _pa, const Del& d) :
+        pointedAt(_pa),
+        deleter(new value_deleter_impl<Del>(d))
+        {}
+        
+        
+        value_ptr<T>& operator=(const value_ptr<T>& other) {
+            if(pointedAt != nullptr) {
+                deletePointed();
+            }
+            pointedAt = other.rawClone();
+            if(deleter != nullptr) delete deleter;
+            deleter = other.deleter;
+            return *this;
+        }
+        
+        value_ptr<T>& operator=(value_ptr<T>&& other) {
+            if(pointedAt != nullptr) deletePointed();
+            if(deleter != nullptr) delete deleter;
+            pointedAt = other.pointedAt;
+            deleter = other.deleter;
+            other.pointedAt = nullptr;
+            other.deleter = nullptr;
+            return *this;
+        }
+        
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+        value_ptr<T>&>
+        operator=(const value_ptr<O>& other) {
+            if(pointedAt != nullptr) deletePointed();
+            pointedAt = other.rawClone();
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(other.deleter->_clone());
+            return *this;
+        }
+        
+        template<typename O>
+        typename std::enable_if_t<std::is_base_of_v<T, O>,
+        value_ptr<T>&>
+        operator=(value_ptr<O>&& other) {
+            if(pointedAt != nullptr) deletePointed();
+            if(deleter != nullptr) delete deleter;
+            pointedAt = other.pointedAt;
+            deleter = new typename value_ptr<O>::template converting_deleter<T>(other.deleter);
+            other.pointedAt = nullptr;
+            other.deleter = nullptr;
+            return *this;
+        }
+        
+        T* operator->() {
+            return pointedAt;
+        }
+        
+        ~value_ptr() {
+            if(pointedAt == nullptr) {
+                // nothing for now!
+            }
+            else {
+                deletePointed();
+            }
+            if(deleter != nullptr) {
+              delete deleter;
+            }
+        }
+    private:
+        void deletePointed() {
+            if(deleter == nullptr) {
+                throw std::runtime_error("Probably impossible?");
+            }
+            deleter->_delete(pointedAt);
+        }
+
+        T* rawClone() {
+            return deleter->clonePointed(pointedAt);
+        }
+    };
+}
+```
+
+We can thankfully move the cloning into the deleter.
+This, of course, *completely* ruins its name, since it now does more than delete things, but we're going to stay too lazy to do anything to it for now.
+
+# 9. Niceties
+
+Okay, we have a working implementation.
+Let's add some convenience functions to help make this a bit easier.
+First, let's add a swap.
+If we add a swap function to our namespace, then `std::swap` will work, so let's do that...
+
+```cpp
+template<typename T>
+    void swap(value_ptr<T>& a, value_ptr<T>& b) {
+        auto p = a.pointedAt;
+        auto d = a.deleter;
+        a.pointedAt = b.pointedAt;
+        a.deleter = b.deleter;
+        b.pointedAt = p;
+        b.deleter = d;
+    }
+```
+
+# 10. Conclusions
+
+Writing this (seemingly simple) class was a lot harder than I thought.
+I went through several iterations, all of which had their own issues.
+I'm still not 100% certain that this works exactly as it should!
+
+This goes to show two things, I think.
+The first is that writing manual memory-management code in C++ is *hard*.
+It's full of weird edge cases, and there's a bunch of things to think about.
+If you're not careful, things will explode in your face.
+
+The second is that C++ is *powerful*.
+The idea of a `value_ptr` is pretty much unheard of in other languages, yet everything works out nicely here.
+We used quite a lot of C++'s template features, and the end result is a nice, useable library that provides value pointer semantics!
+
+I've been writing a lot more C++ lately, and I've been really enjoying it.
+For all its flaws, it's exteremly powerful, and with `shared_ptr` and `unique_ptr` it's pretty easy to not shoot yourself in the foot.
+I've written before about how much I love Ruby for putting a lot of power in the hands of the programmer with its metaprogramming capability.
+I like C++ for much the same reasons&mdash;especially since C++ gives you metaprogramming power along with speed and type-safety, neither of which Ruby has.
+
+You can find the full code [here](https://gist.github.com/AnthonySuper/57633b0a5ffdedc2ee36b9ebe3d21f16).
+I'm more than happy to accept changes to fix any bugs I might have missed.
+If there's any sort of demmand for a `value_ptr` as a standalone library, I'll release one (and write more tests to verify things actually work).
