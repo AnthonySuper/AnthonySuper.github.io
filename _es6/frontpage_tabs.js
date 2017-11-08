@@ -34,6 +34,7 @@ function addListener(n) {
 
 document.addEventListener('DOMContentLoaded', () => {
   var elm = document.getElementById("bio-sections-list");
+  if(! elm) return;
   var list = elm.getElementsByTagName("li");
   for(let i = 0; i < list.length; i++){
     addListener(list[i]);

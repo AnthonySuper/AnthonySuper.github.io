@@ -92,4 +92,10 @@ a {
   }
 }
 
-
+.katex-display {
+  max-width: calc(100% - 2em);
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 16px 0;
+}

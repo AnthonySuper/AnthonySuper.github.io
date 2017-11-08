@@ -7,6 +7,7 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://anthony.noided.media" # the base hostname & protocol for your site
 twitter_username: anthonysuper1
 github_username:  anthonysuper
+exclude: [node_modules, package.json, yarn.lock]
 
 #Build settings
 markdown: kramdown

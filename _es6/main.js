@@ -2,8 +2,10 @@ import {ImagePreview} from './image_preview';
 import {CanvasTest} from './canvas_test';
 import './gpg_key';
 import './frontpage_tabs';
+import {setup as setupMath} from './math';
 
 document.addEventListener("DOMContentLoaded", function(event){
+  setupMath();
   var imgs = document.getElementsByClassName("inset-image");
   // conver to array
   imgs = Array.prototype.slice.call(imgs);
