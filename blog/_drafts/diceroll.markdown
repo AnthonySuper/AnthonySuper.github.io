@@ -401,4 +401,6 @@ I wanted to add dice together to see just how bad my rolls are when I casted *Fi
 The fact that those two things are the same was pretty interesting to me.
 
 If you're interested in checking out this code (which can actually multiply and subtract dice as well as adding them), check out [FifthedSim](https://github.com/AnthonySuper/FifthedSim), which I'm still developing when I have the time.
-If you can find a way to make dice multiplication (or anything else) faster I'd love to hear it!
+Right now the dice functionality is pretty good, but my eventual goal is to be able to use it to simulate D&D battles under reasonable conditions, so I can make fights closer and more interesting with my players.
+If you have any further contributions to this, I'd love to hear it!
+Either drop a pull request, make a github issue, or 
