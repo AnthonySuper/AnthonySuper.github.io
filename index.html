@@ -1,55 +1,30 @@
 ---
 title: "Anthony Super"
 navname: Home
-layout: indexpage
+layout: home
 ---
 
-<div class="home">
-  <article id="frontpage-info">
-    <ul id="bio-sections-list">
-      <li class="active" data-header-for="1">
-        <h2>About</h2>
-      </li>
-      <li data-header-for="2">
-        <h2>GPG Keys</h2>
-      </li>
-      <li data-header-for="3">
-        <h2>Elsewhere</h2>
-      </li>
-    </ul>
-    <div class="section-content">
-      {% include about_section.html %}
-      {% include key_section.html %}
-      {% include elsewhere.html %}
-    </div>
-  </article>
+<style>
+body {
+  background-color: #111;
+}
+</style>
 
-  <div class="homepage-section" id="homepage-blog-posts">
-    <a class="blog-header-link" href="/blog"><h1>Blog</h1></a>
-    <ul class="blog-posts-list">
-      {% for post in site.categories.blog limit:2 %}
-      <li class="blog-posts-list-item">
-        <div class="blog-posts-list-header">
-          <h2>
-            <a class="blog-post-link"
-              href="{{ post.url | prepend: site.baseurl }}">
-              {{post.title}}
-            </a>
-          </h2>
-          <span class="blog-post-date">
-            {{ post.date | date: "%b %-d, %Y"}}
-          </span>
-        </div>
-        <div class="blog-post-preview">
-          {{ post.excerpt }}
-        </div>
-        <div class="blog-post-read-more">
-          <a href="{{ post.url | prepend: site.baseurl}}">
-            Read More
-          </a>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-</div>
+<article id="frontpage-info">
+  <h1 class="fancy-header">
+    Anthony Super
+  </h1>
+
+  <ul class="thigs-list row-list">
+    <li class="thing">
+      Blog
+    </li>
+    <li class="thing">
+      Projects
+    </li>
+    <li class="thing">
+      Elsewhere
+    </li>
+  </ul>
+
+</article>

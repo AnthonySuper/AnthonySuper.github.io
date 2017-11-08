@@ -3,6 +3,7 @@ import {CanvasTest} from './canvas_test';
 import './gpg_key';
 import './frontpage_tabs';
 import {setup as setupMath} from './math';
+import './typing';
 
 document.addEventListener("DOMContentLoaded", function(event){
   setupMath();
