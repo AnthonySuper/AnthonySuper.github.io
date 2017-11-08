@@ -1,5 +1,5 @@
 ---
-title: "Dice, Runtimes, Probability, and Complex Analysis"
+title: "Luck and Analysis"
 layout: post
 categories: ["math", "programming", "ruby"]
 ---
