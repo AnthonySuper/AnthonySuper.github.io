@@ -6,7 +6,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "js"),
-    filename: "main.js"
+    filename: "out.js"
   },
 
   plugins: [
