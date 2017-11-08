@@ -54,7 +54,7 @@ Now, let's say I have a distribution class which has a member variable `@map`, w
 Let's also say I have `.min` and `.max` methods that return the minimum possible value and the maximum possible value, respectively.
 The naive way to implement this is something pretty simple:
 
-```
+```ruby
   def add(other_dist)
     overall_min = min + other_dist.min
     overall_max = max + other_dist.max
