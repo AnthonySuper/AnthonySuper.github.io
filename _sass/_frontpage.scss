@@ -1,12 +1,8 @@
 @import "colors";
 
-#frontpage-info {
-  margin: 40vh 100px;
-  display: flex;
-  flex-direction: column;
-  font-family: "Anonymous Pro", monospace;
-  color: #21FF05;
+$inner-content-width: 700px;
 
+#frontpage-info {
   @include media-query($on-palm) {
     margin: 40vh 0;
   }
@@ -25,6 +21,20 @@
   span:first-child {
     margin-right: 0.5em;
   }
+
+  @include media-query($on-palm) {
+    font-size: 64px;
+  }
+}
+
+@keyframes blur-in {
+  0% {
+    filter: blur(10px);
+  }
+
+  100% {
+    filter: blur(0px);
+  }
 }
 
 .typed-cursor {
@@ -32,6 +42,226 @@
 }
 
 #rolling-content {
-  transition: transform 250ms ease-in-out;
+  transition: transform 500ms ease-in-out;
   display: block;
+}
+
+#name-header {
+  padding-top: 40vh;
+}
+
+.nouns-list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+
+  li {
+    margin: 0;
+    padding: 0;
+    width: 33%;
+    text-align: center;
+    font-size: 32px;
+  }
+
+  @include media-query($on-palm) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.noun {
+  filter: blur(10px);
+  animation: 250ms linear blur-in;
+  animation-fill-mode: forwards;
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      animation-delay: 0.6s * $i;
+    }
+  }
+}
+
+.info-blurb {
+  max-width: $inner-content-width;
+  margin: auto;
+}
+
+
+.big-center-title {
+  padding-top: 10vh;
+  font-size: 10vh;
+  text-align: center;
+  font-family: "Anonymous Pro", monospace;
+}
+
+.frontpage-intro {
+  min-height: 100vh;
+  background-color: #0f0f0f;
+  font-family: "Anonymous Pro", monospace;
+  color: #21FF05;
+}
+
+$rollout-size: 300px;
+
+/**
+ * DEVELOPER SECTION
+ */
+.developer {
+  min-height: 100vh;
+  background-color: #888;
+  padding-bottom: 10vh;
+  position: relative;
+}
+
+.sidebar-logo-container {
+  display: flex;
+  max-width: 900px;
+  margin: auto;
+}
+
+.project-showcase {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: $inner-content-width;
+  margin: auto;
+  justify-content: space-between;
+}
+
+
+.frontpage-project {
+  position: static;
+  transition: 250ms ease-in-out;
+  width: 25%;
+  margin: 8px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .content {
+    height: 0;
+    overflow: hidden;
+    transition: height 250ms ease-in-out, padding 250ms ease-in-out;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 8px;
+    background-color: #fff;
+    border-radius: 3px;
+  }
+
+  &.active {
+    margin-bottom: $rollout-size + 16px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+    .content {
+      opacity: 1;
+      transition: height 250ms ease-in-out;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+      height: $rollout-size;
+    }
+  }
+}
+
+.padding-hack {
+  padding: 16px;
+
+  h4 {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 24px;
+  }
+}
+
+.time {
+  color: #555;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+/**
+ * WRITER SECTION
+ */
+
+.writer {
+  min-height: 100vh;
+  padding-bottom: 20vh;
+  background-color: #fbf9f6;
+}
+
+/**
+ * SERIAL DABBLER SECTION
+ */
+
+.serial-dabbler {
+  min-height: 100vh;
+}
+
+.dabble {
+  display: flex;
+  max-width: $inner-content-width;
+  margin: auto;
+  justify-content: center;
+  margin-bottom: 16px;
+
+  &:first-of-type {
+    margin-top: 16px;
+  }
+
+  h3 {
+    font-weight: 500;
+  }
+}
+
+.dabble-image-container {
+  width: 15%;
+  height: auto;
+  margin-right: 16px;
+  padding-top: 8px;
+
+  img {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+  }
+}
+
+.dabble-content {
+  width: 85%;
+  flex-grow: 1;
+}
+
+
+/**
+ * CONTACT SECTION
+ */
+
+.contact {
+  color: #21FF05;
+  background-color: rgba(15, 15, 15, 0);
+  min-height: 100vh;
+}
+
+.contact-list {
+  display: flex;
+  max-width: $inner-content-width;
+  margin: auto;
+  padding-top: 10vh;
+
+  a {
+    width: 33%;
+    height: 10vh;
+    display: block;
+
+    img {
+      display: block;
+      max-height: 10vh;
+      height: auto;
+      margin: auto;
+    }
+  }
 }

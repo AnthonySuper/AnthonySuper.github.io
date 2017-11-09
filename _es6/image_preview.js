@@ -4,7 +4,6 @@ class ImagePreview{
   }
   registerListener(){
     var listener = (event) => {
-      console.log("Moving to a big image...");
       this.img.removeEventListener("click", listener);
       this.toBigImage();
       this.registerSmallListener();
@@ -16,7 +15,6 @@ class ImagePreview{
   }
   registerSmallListener(){
     var listener = (event) => {
-      console.log("Going back to a small image...");
       this.img.removeEventListener("click", listener);
       this.toNormalImage();
       this.registerListener();

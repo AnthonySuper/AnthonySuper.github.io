@@ -4,27 +4,277 @@ navname: Home
 layout: home
 ---
 
-<style>
-body {
-  background-color: #111;
-}
-</style>
+<article id="frontpage-info" class="frontpage">
+  <section class="frontpage-intro">
+    <h1 class="fancy-header" id="name-header">
+      Anthony Super
+    </h1>
 
-<article id="frontpage-info">
-  <h1 class="fancy-header">
-    Anthony Super
-  </h1>
+    <ul class="big-center-list nouns-list">
+      <li class="noun">
+        Developer
+      </li>
+      <li class="noun">
+        Writer
+      </li>
+      <li class="noun">
+        Serial Dabbler 
+      </li>
+    </ul>
+  </section>
 
-  <ul class="thigs-list row-list">
-    <li class="thing">
-      Blog
-    </li>
-    <li class="thing">
-      Projects
-    </li>
-    <li class="thing">
-      Elsewhere
-    </li>
-  </ul>
+  <section class="developer" data-scroll-animate="color-in-black">
+    <h2 data-scroll-animate="blur-in" class="big-center-title">
+      Developer
+    </h2>
 
+    <div class="project-showcase">
+      <section class="frontpage-project raytrace">
+        <img src="/assets/projects/raytrace.png" 
+        data-scroll-animate="scale-in"
+        data-scroll-animate-oneshot="true">
+        <div class="content">
+          <div class="padding-hack">
+            <h4>Raytrace</h4>
+            <div class="time">
+              Fall 2017&mdash;Present
+            </div>
+            Raytrace is the (unimaginative) name of a from-scratch Raytracer I am currently writing as part of a class.
+            Raytrace is written in C++14, and features recursive ray tracing, parallel rendering, and various optimizations.
+            The class allowed us to use a linear algebra library, but I opted to write this myself, in order to learn more.
+            <P>
+              The code for Raytrace is currently non-public as I am still taking the class.
+              I hope to be able to implement a variety of interesting effects, including semi-transparent materials and refraction.
+            </div> 
+          </div>
+        </section>
+        <section class="frontpage-project diceroll">
+          <img src="/assets/projects/diceroll-optimized.svg" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>Diceroll</h4>
+              <div class="time">
+                Summer 2017
+              </div>
+              Diceroll is a Ruby program to calculate dice formulas, and the resulting probability of those formulas.
+              This allows a user to ask a question like "What are the chances my rolls total 28 when I roll six six-sided dice, then flip a coin and double the result if it's heads?" (which is 2.4%, roughly).
+              The code can be found <a href="https://github.com/AnthonySuper/FifthedSim">here</a>.
+            </div> 
+          </div>
+        </section>
+        <section class="frontpage-project toonpunk">
+          <img src="/assets/projects/toonpunk.png" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>Toonpunk</h4>
+              <div class="time">
+                August 2017&mdash;Present
+              </div>
+              I developed the Website for ToonPunk, an RPG system where you play as cartoon criminals in a cyberpunk future.
+              I used Jekyll to build said website (much like the one you're on now).
+              While I did not fully design the site myself, I did adapt an existing design (made by the author of the project) to be responsive, and to look a bit nicer.
+              <p>
+                The website can be found <a href="http://toonpunkgame.com">here</a>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="frontpage-project lgs">
+          <img src="/assets/projects/lgs.png" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>LGS Innovations</h4>
+              <div class="time">
+                Summer 2017
+              </div>
+              I interned at LGS innovations during the Summer in 2017.
+              This internship was a lot of fun and gave me the chance to experiment with Node-based backend development (using LGS's propriety in-house framework, BITS) and with Polymer for the front-end.
+              I also interacted with open-source Cellular Base Station Routers.
+              <p>
+                Unfortunately, the exact nature of the project I built is still under wraps.
+              </p>
+            </div> 
+          </div>
+        </section>
+
+        <section class="frontpage-project imagehex">
+          <img src="/assets/projects/imagehex.svg" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>ImageHex</h4>
+              <div class="time">
+                Late 2014&mdash;Late 2016
+              </div>
+              ImageHex is an art website.
+              It has features for sharing and finding art, as well as a powerful commissions feature.
+              ImageHex was Noided Media LLC's primary project for many years.
+              Unfortunately, however, we could never quite hit our target market.
+              It is no longer under active development.
+              A version of the website is still active <a href="https://www.imagehex.com">here</a>.
+              <p>
+                ImageHex used PostgreSQL (with some fairly complicated queries) as its database as Rails as its backend server.
+                The frontend was made in a mix of static HTML and React.js.
+                We also leveraged Redis for caching, S3 for Image hosting, and Heroku for site hosting.
+              </p>
+            </div> 
+          </div>
+        </section>
+
+
+        <section class="frontpage-project fictiondock">
+          <img src="/assets/projects/fictiondock.svg" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>FictionDock</h4>
+              <div class="time">
+                June&mdash;August, 2015
+              </div>
+              FictionDock is a fanfiction website.
+              Me and a friend made it on a whim to learn new web development technologies.
+              I designed and built the backend using Ruby on Rails, and did much of the frontend JavaScript Development.
+              Although the site is no longer active, the source code can be found <a href="https://github.com/noidedmedia/Fiction-Dock">here</a>.
+            </div> 
+          </div>
+        </section>
+
+        <section class="frontpage-project wavhead">
+          <img src="/assets/projects/wavhead.svg" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>WavHead</h4>
+              <div class="time">
+                October 2014
+              </div>
+              WavHead was the first webdev project I ever embarked on.
+              The idea was to have a democratic DJ&mdash;a system where partygoers could vote on what song to play next.
+              It actually turned out fairly well.
+              <p>
+                WavHead was built in Sinatra, using an SQLite database to store song information.
+                The frontend was mostly Vanilla JS, and I built it with the help of a friend.
+                The promo website we made for it is <a href="https://github.com/noidedmedia/WavHead">here.</a>
+              </p>
+            </div> 
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <section class="writer">
+    <h2 data-scroll-animate="blur-in" class="big-center-title">
+      Writer
+    </h2>
+
+    <div class="info-blurb">
+      I don't write as often as I should&mdash;unfortunately, writing takes time, a resource I'm scant on&mdash;but I love writing.
+      I maintain a <a href="/blog">blog</a> which is focused on both technical topics (mostly related to programming, although I do a fair bit of math as well).
+      I also work on original fiction on occasion, although (sadly) I rarely get the chance to do so as of late.
+    </div>
+  </section>
+
+  <section class="serial-dabbler">
+    <h2 data-scroll-animate="scale-in" class="big-center-title">
+      Serial Dabbler
+    </h2>
+
+    <div class="info-blurb">
+      I've never been one to say no to trying new things, and a huge variety of topics interest me.
+      As a result, I've played around in a variety of fields.
+      I wouldn't say I have deep knowledge of any of these, but they're topics that interest me, and I'm at least familiar with them.
+    </div>
+
+    <section class="dabble">
+      <div class="dabble-image-container">
+        <img src="assets/dabbles/fcp.png" 
+          data-scroll-animate="rotate-in"
+          data-scroll-animate-max="0.5">
+      </div>
+      <div class="dabble-content">
+        <h3>Video Editing</h3>
+        I've enjoyed Video Editing ever since I took a class on it in 7th grade.
+        I made a hobby of it, creating a few joke videos with my friends (that are sadly now lost to time and deleted youtube accounts).
+        <p>
+        I had the opportunity to apply my skills proffesionally twice.
+        In the first case, I recorded and editing a training session for Aleo Solar, which was to be used as part of their proposed merger with Bosch.
+        I delivered the videos, and the merger sadly fell through.
+        In the second, I recored a series of videos focused at marketing to donors for a Denver-based woman's health clinic. 
+      </div>
+    </section>
+
+    <section class="dabble">
+      <div class="dabble-image-container">
+        <img src="assets/dabbles/logic_pro.png" 
+          data-scroll-animate="rotate-in"
+          data-scroll-animate-max="0.5">
+      </div>
+      <div class="dabble-content">
+        <h3>Musical Production</h3>
+        I played various low brass instruments in the years up to college, which started a general affinity for music which has persisted for my entire life.
+        As part of this, I briefly played around with musical production.
+        The result of that is <a href="https://soundcloud.com/somemoron">here.</a>
+      </div>
+    </section>
+
+    <section class="dabble">
+      <div class="dabble-image-container">
+        <img src="assets/dabbles/math.svg" 
+          data-scroll-animate="rotate-in"
+          data-scroll-animate-max="0.5">
+      </div>
+      <div class="dabble-content">
+        <h3>Math</h3>
+        I've loved math for (however cliche it may be) essentially as long as I can remember.
+        I got a minor in mathematics at CSU, and I intentionally took more math-heavy classes during my time there.
+        I don't consider myself a mathematician&mdash;you need at least a bachelors for that&mdash;but I do love the topic, and often read on it.
+      </div>
+    </section>
+
+    <section class="dabble">
+      <div class="dabble-image-container">
+        <img src="assets/dabbles/skiing.svg" 
+          data-scroll-animate="rotate-in"
+          data-scroll-animate-max="0.5">
+      </div>
+      <div class="dabble-content">
+        <h3>Skiing</h3>
+        Unlike Frank Ocean, I <emph>do</emph> live in Denver, and I take advantage of the resulting access to the slopes.
+        I'm not a fantastic skier, but I do enjoy it, and take trips semi-often during the season.
+      </div>
+    </section>
+  </section>
+
+  <section class="contact" 
+    data-scroll-animate="darken-in" 
+    data-scroll-animate-max="0.5">
+     <h1 class="fancy-header" id="name-header">
+      Let's Get in Touch
+    </h1>
+
+    <div class="contact-list">
+      <a href="https://github.com/anthonysuper">
+        <img src="/assets/github-icon.svg" style="filter: invert();">
+      </a>
+
+      <a href="" class="mail-replaceme" id="MailReplace">
+        <img src="/assets/mail.svg" style="filter: invert();">
+      </a>
+
+      <a href="https://www.linkedin.com/in/anthony-super-9116b976/">
+        <img src="/assets/linkedin.svg" style="filter: invert();">
+      </a>
+    </div>
+  </section>
 </article>

@@ -6,7 +6,9 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "js"),
-    filename: "out.js"
+    filename: "out.js",
+    chunkFilename: "[name].bundle.js",
+    publicPath: "/js/",
   },
 
   plugins: [
@@ -21,8 +23,11 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ["env"],
-            plugins: ["transform-async-to-generator"],
+            presets: ["es2017"],
+            plugins: [
+              "transform-async-to-generator",
+              "syntax-dynamic-import",
+            ],
           }
         }
       }

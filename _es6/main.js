@@ -2,17 +2,20 @@ import {ImagePreview} from './image_preview';
 import {CanvasTest} from './canvas_test';
 import './gpg_key';
 import './frontpage_tabs';
-import {setup as setupMath} from './math';
-import './typing';
+import setupMath from './math';
+
+async function doFrontpage() {
+  console.log("Frontpage called");
+  let frontpage = await import(/* webpackChunkName: "frontpage" */ "./frontpage");
+  frontpage.default();
+}
 
 document.addEventListener("DOMContentLoaded", function(event){
   setupMath();
   var imgs = document.getElementsByClassName("inset-image");
   // conver to array
   imgs = Array.prototype.slice.call(imgs);
-  console.log("After click, imgs is:",imgs);
   imgs.forEach((img) => {
-    console.log("Adding a handler on:",img);
     var handler = new ImagePreview(img);
     handler.registerListener();
   });
@@ -20,5 +23,9 @@ document.addEventListener("DOMContentLoaded", function(event){
   if(f){
     console.log("Got a canvas: f");
     new CanvasTest(f, "/assets/tubahat.jpg");
+  }
+
+  if(document.getElementsByClassName("frontpage")) {
+    doFrontpage();
   }
 });
