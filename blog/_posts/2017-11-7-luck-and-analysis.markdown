@@ -141,13 +141,13 @@ Just for kicks, I decided to try both, and plot them on a graph:
 <img src="/blog/assets/dice_benchmark.svg" alt="Dice benchmark graph" class="big-image">
 
 Wait, what?
-To me, it looks like our divide-and-conquer. 
+To me, it looks like our divide-and-conquer is just barely larger than linear!
 Let's try out just the divide-and-conquer solution to some very large combination of n and d to see if this pattern continues:
 
 <img src="/blog/assets/dice_benchmark_alt.svg" tlt="Dice Benchmark Alternative Graph" class="big-image">
 
 That's *much* better!
-It turns out that the constant factor in the naive case really makes a difference with small inputs.
+It turns out that the constant factor in the naive case really makes a difference with small inputs, but we were right&mdash;it's quadratic.
 
 Still, in a way, that's actually *much worse*.
 Sure, I don't look like an idiot for getting the wrong recurrence, but now I'm still stuck with $$ \mathcal{O}(n^2d^2) $$, which isn't what I want at all.
@@ -403,4 +403,3 @@ The fact that those two things are the same was pretty interesting to me.
 If you're interested in checking out this code (which can actually multiply and subtract dice as well as adding them), check out [FifthedSim](https://github.com/AnthonySuper/FifthedSim), which I'm still developing when I have the time.
 Right now the dice functionality is pretty good, but my eventual goal is to be able to use it to simulate D&D battles under reasonable conditions, so I can make fights closer and more interesting with my players.
 If you have any further contributions to this, I'd love to hear it!
-Either drop a pull request, make a github issue, or 
