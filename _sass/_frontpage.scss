@@ -3,9 +3,6 @@
 $inner-content-width: 700px;
 
 #frontpage-info {
-  @include media-query($on-palm) {
-    margin: 40vh 0;
-  }
 }
 
 .fancy-header {
@@ -66,6 +63,10 @@ $inner-content-width: 700px;
   @include media-query($on-palm) {
     flex-direction: column;
     align-items: center;
+
+    li {
+      width: 100%;
+    }
   }
 }
 
@@ -83,6 +84,7 @@ $inner-content-width: 700px;
 .info-blurb {
   max-width: $inner-content-width;
   margin: auto;
+  padding: 16px;
 }
 
 
@@ -233,6 +235,7 @@ $rollout-size: 300px;
 .dabble-content {
   width: 85%;
   flex-grow: 1;
+  padding-right: 16px;
 }
 
 
