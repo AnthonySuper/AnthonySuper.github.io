@@ -30,10 +30,24 @@
   box-shadow: 3px 4px 10px #333;
   margin: 10px;
 }
-@include media-query($on-laptop){
+
+@include media-query($on-laptop) {
   .post{
     margin-left: 2vw;
     margin-right: 2vw;
     font-size: 1.2rem;
+  }
+}
+
+.back-button {
+  padding-top: 8px;
+  font-size: 24px;
+  color: #21FF05 !important;
+  width: 64px;
+  text-align: center;
+  display: block;
+
+  &:hover {
+    text-decoration: none;
   }
 }

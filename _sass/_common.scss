@@ -46,13 +46,25 @@ a {
 }
 
 #main-header{
-  background-color: $color-primary-3;
-  color: white;
-  font-size: 15px;
-  text-align: center;
+  display: flex;
+  background-color: #0f0f0f;
+  font-family: "Anonymous Pro", monospace;
+  color: #21FF05;
   margin-bottom: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-right: 64px;
+    flex-grow: 1;
+    margin-bottom: 0;
+  }
+
+  a {
+    color: #21FF05 !important;
+  }
 
 }
 
@@ -67,23 +79,24 @@ a {
   position: sticky;
   top: 0px;
   z-index: 1000;
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
-  background-color: $color-primary-3;
+  background-color: #0f0f0f;
 
-  ul{
+  ul {
     margin: auto;
     max-width: 700px;
     list-style-type: none;
     display: flex;
   }
 
-  a{
-    color: white;
+  a {
+    font-family: "Anonymous Pro", monospace;
+    color: #21FF05;
   }
 
   li  {
-    background-color: $color-primary-2;
+    background-color: #0f0f0f;
     flex-grow: 1;
     display: inline;
     &:not(:last-child) {
