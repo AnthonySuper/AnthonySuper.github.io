@@ -74,11 +74,7 @@ $inner-content-width: 700px;
   filter: blur(10px);
   animation: 250ms ease-in-out blur-in;
   animation-fill-mode: forwards;
-  @for $i from 1 through 3 {
-    &:nth-child(#{$i}) {
-      animation-delay: 0.25s * $i;
-    }
-  }
+  animation-delay: 0.5s;
 }
 
 .info-blurb {
