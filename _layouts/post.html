@@ -15,6 +15,10 @@
         {{ page.date | date: "%b %-d, %Y" }}
       </span>
       {{content}}
+
+      {% if page.categories contains "dungeon landlord" %}
+      {% include dungeon_landlord.html %}
+      {% endif %}
     </article>
     {% include footer.html %}
   </body>
