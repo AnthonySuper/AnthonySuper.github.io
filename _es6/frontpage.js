@@ -7,5 +7,8 @@ export default function setUp() {
   	projectReady();
   	// LOL spammers
   	let ar = ["mailto:", "anthony", "@", "noided", ".", "media"];
-  	document.getElementById("MailReplace").href = ar.join("");
+		let elm = document.getElementById("MailReplace")
+		if(elm) {
+			elm.href = ar.join("");
+		}
 }
