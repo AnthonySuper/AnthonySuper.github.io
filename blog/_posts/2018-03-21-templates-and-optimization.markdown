@@ -7,12 +7,12 @@ categories: ["programming", "dungeon landlord", "c++"]
 Recently, I've been working on a 2D game.
 Full-time, in fact: I recently graduated early, and I figured I might as well take a year and a half to work on this project before getting a "real" job.
 I initially started creating a game in Unity, however, I quickly realized that I didn't actually like the engine.
-At all, in fact.
+I actually *disliked* it fairly heavily, and it was hurting my productivity.
 So, naturally, my next thought was to code the game from scratch.
 
 
 The natural choice for this was C++.
-I [messed around with making a 2D engine before](https://anthony.noided.media/blog/programming/c++/ruby/2016/05/12/mruby-cpp-and-template-magic.html) and enjoyed it.
+I [messed around with making a 2D engine before](https://anthony.noided.media/blog/programming/c++/ruby/2016/05/12/mruby-cpp-and-template-magic.html) and enjoyed it, even if I didn't actually get very far.
 I took a bit of a different approach this time, intentionally trying to make a *game* instead of an *engine*.
 However, that doesn't mean that I don't occasionally encounter engine-dev-related problems.
 One interesting recent one: optimizing a component of my ECS system.
@@ -37,7 +37,7 @@ It's essentially just an identifier&mdash;the components are stored separately.
 
 *Systems* are the interesting bit.
 Systems inspect the entities and do something to them based on their components.
-A good example is the ImageDraw system.
+A good example is the `ImageDraw` system.
 It finds all Entities with an `Image` component and a `Position` component, and  uses the information in each to draw a scene.
 Simple!
 
@@ -46,7 +46,7 @@ This allows us to have an easily-extensible game loop.
 If I want to add more logic, I throw on a couple of systems, and occasionally a few new type of components.
 
 This, however, presented an interesting optimization problem.
-The way I implemented an ECS was fairly simple: I have one base class for each component, which looks like this:
+The way I implemented an ECS was via the use of type erasure: I have one base class for each component, which looks like this:
 
 ```cpp
 struct ComponentBase {
@@ -122,7 +122,7 @@ You *can* have the behavior of a single entity depend on multiple entities, and 
 
 # Problems
 
-The initial implementation of this function was very, very simple:
+The initial implementation of this function looked something like this:
 
 ```cpp
  template <typename... Ts, typename Func>
@@ -137,8 +137,7 @@ The initial implementation of this function was very, very simple:
 ```
 
 The `typename.... Ts` is called a *parameter pack*.
-It accepts an arbitrary number of types.
-
+It accepts an arbitrary number of types, and essentially puts them in a list.
 In the statement `callback(ent, getComponent<Ts>(ent)...)`, we tell our compiler to *expand* the parameter pack into the list of parameters with the `...` operator.
 So, if we call `eachEntity<Image&, Position&>`, it will expand that statement into `callback(ent, getCompoent<Image&>(ent), getComponent<Position&>(ent))`.
 That's exactly what we want.
@@ -147,22 +146,22 @@ However, this was actually a bit of a performance problem.
 The issue was in the `getComponent<T>` function.
 You see, this function needs to:
 
-1. Find what's the proper `ComponentSystem` for `T`.
+1. Determine the proper `ComponentSystem` for `T`.
 2. Get that `ComponentSystem`
 3. Call its `tryGet` method with the right entity.
 4. Cast to `T`
 5. Return the result.
 
-This isn't *too* much work, but it's step 1 that killed us.
-The engine stores each `ComponentSystem` in an `std::vector`.
+This isn't *too* much work, but it's steps 1 and 2 that killed us.
+The engine stores each `ComponentSystem*` in an `std::vector`.
 Each `ComponentSystem` then stores all its components in another vector.
 So, every time, we are hitting at least two different places in memory, and possibly more!
-I didn't think this would be a problem, but benchmarking with the excellent [Callgrind](http://valgrind.org/docs/manual/cl-manual.html) tool showed that the engine was spending quite a bit of time in just fetching `ComponentSystem`s out of the vector.
+I didn't think this would be a problem, but benchmarking with the excellent [Callgrind](http://valgrind.org/docs/manual/cl-manual.html) tool showed that the engine was spending quite a bit of time in just fetching `ComponentSystem*`s out of the vector.
 
 # Optimization Ideas?
 
 I quickly saw a potential optimization opportunity:
-We *always* get the same `ComponetSystem`s for each entity on every call to `eachEntity`.
+We *always* get the same `ComponetSystem*`s for each entity on every call to `eachEntity`.
 If we call `w.eachEntity<Image&, Position&>` we get the `ImageComponentSystem` and `PositionComponentSystem` every time!
 There's no reason to do that.
 We should get them all *once*, before the `for` loop.
@@ -219,7 +218,7 @@ Thankfully, there's another way to get a sequence of different types: use a `tup
 
 A tuple is an ordered list of values, each of which may have a different type.
 In our case, we want a list of different `ConvertHelper<T>`s.
-To use our canonical example, for `eachEntity<Image&, Position&>`, we want an `std::tuple<ConversionHelper<Image&>, ConversionHelper<Position&>>`.
+To use our canonical example, for `eachEntity<Image&, Position&>`, we want an `std::tuple<ConvertHelper<Image&>, ConvertHelper<Position&>>`.
 We can define a function that returns that rather easily:
 
 ```cpp
@@ -345,7 +344,7 @@ in the last argument of `std::index_sequence<Idxs...>`.
 
 In C++, the compiler can *infer* the template arguments of a function based on the arguments to that function.
 If you have something like:
-```
+```cpp
 template<typename T>
 T add(T a, T b) { return a + b; }
 ```
@@ -362,9 +361,48 @@ However, right now, this is the best (and only) way to properly iterate over ele
 Hopefully a future language version will add more readable facilities for doing this that do not rely on gross tricks.
 Until then, this gets the job done.
 
+Our final code looks like this:
+
+```cpp
+template <typename... Ts, typename Func>
+void World::eachEntity(Func callback) {
+
+    std::array<ComponentSystem*, sizeof...(Ts)> comps{
+        getComponentSystem<Ts>()...
+    };
+    auto converts = getConverters<Ts...>();
+    for(int i = 0; i < entities.size(); ++i) {
+        auto& ent = entities[i];
+        if(ent && ent.hasComponents<Ts...>) {
+            invokeConverters(callback, ent, converts, comps);
+        }
+    }
+}
+```
+
+Using our cannonical example again, this eventually becomes:
+
+```cpp
+template <typename Func>
+void World::eachEntity<Image&, Position&>(Func callback) {
+    std::array<ComponentSystem*, 2> comps{
+        getComponentSystem<Image&>(), getComponentSystem<Position&>()
+    };
+    auto converts = std::make_tuple(ConvertHelper<Image&>{}, 
+                                    ConvertHelper<Position&>{});
+    for(int i = 0; i < entities.size(); ++i) {
+        auto& ent = entities[i];
+        if(ent && ent.hasComponents<Ts...>) {                 
+            invokeConverters(callback, ent,
+                             std::get<0>(converts)(comps[0]->tryGet(ent)),
+                             std::get<1>(converts)(comps[1]->tryGet(ent)));
+        }
+    }
+}
+```
 # Coda
 
-This optimization allowed my engine to go from about ~93 FPS to around ~143 FPS in debug mode, and around ~800FPS to ~1100FPS in release mode.
+This optimization allowed my engine to go from about ~93 FPS to around ~143 FPS in debug mode, and from around ~800FPS to ~1100FPS in release mode.
 I was very impressed with this speedup.
 However, I sort of neglected to realize that I was testing with approximately two orders of magnitude more entities than are ever likely to be rendered in my specific game.
 This was a fun optimization, but my time might have been better spent doing other things.
@@ -375,5 +413,5 @@ This certainly taught me a lot about parameter packs, and how to think about opt
 Who knows?
 Maybe one day I'll make a game that *is* very performance-intensive, and be able to put these tricks to use.
 
-Assuming I can get it past code review, at least.
+Assuming I can get something this ugly past code review, at least.
 
