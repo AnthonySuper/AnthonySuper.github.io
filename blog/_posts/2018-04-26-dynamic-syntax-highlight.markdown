@@ -81,7 +81,8 @@ export const Code = (props) =>  {
         value={props.value || ""} />;
     },
     // While loading, display the code in the normal tags
-    loading: () => <pre><code>{props.value || "s
+    loading: () => <pre><code>{props.value || "}</pre></code>
+  });
   return <Cmp />;
 }
 
