@@ -3,6 +3,7 @@ import {CanvasTest} from './canvas_test';
 import './gpg_key';
 import './frontpage_tabs';
 import setupMath from './math';
+import "./dyn-highlight-demo/main";
 
 async function doFrontpage() {
   console.log("Frontpage called");

@@ -3,11 +3,12 @@ const webpack = require('webpack'); //to access built-in plugins
 
 module.exports = {
   entry: "./_es6/main.js",
+  devtool: "source-map",
 
   output: {
     path: path.resolve(__dirname, "js"),
     filename: "out.js",
-    chunkFilename: "[name].bundle.js",
+    chunkFilename: "[name].[chunkhash:8].bundle.js",
     publicPath: "/js/",
   },
 
@@ -23,15 +24,27 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ["es2017"],
+            presets: ["es2017", "react"],
             plugins: [
               "transform-async-to-generator",
               "syntax-dynamic-import",
             ],
           }
         }
-      }
+      },
+      {
+            test: /\.scss$/,
+            use: [{
+                loader: "style-loader"
+            }, {
+                loader: "css-loader"
+            }, {
+                loader: "sass-loader",
+                options: {
+                    includePaths: ["absolute/path/a", "absolute/path/b"]
+                }
+            }]
+        }
     ]
   }
-
 }
