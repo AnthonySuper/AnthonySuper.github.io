@@ -6,7 +6,7 @@ categories: [programming, haskell, theory]
 
 It's basically impossible to write anything that tries to introduce people to monads.
 It's a rather [famous curse](https://byorgey.wordpress.com/2009/01/12/abstraction-intuition-and-the-monad-tutorial-fallacy/).
-Heck, the Haskell wiki speciifically says that ["Monads are not a good choice as a topic for your first Haskell blog entry"](https://wiki.haskell.org/What_a_Monad_is_not).
+Heck, the Haskell wiki specifically says that ["Monads are not a good choice as a topic for your first Haskell blog entry"](https://wiki.haskell.org/What_a_Monad_is_not).
 
 This is my first Haskell blog entry.
 It's going to be about Monads.
@@ -27,7 +27,7 @@ Maybe I'm working in a purely functional language and I want to do things that t
 But I'm a programmer.
 I don't want to have to care about those things.
 I want them all to go away.
-I'll have to deal with that crap later but for now I want to just pretend that everything is all totally fine.
+I'll have to deal with that crap later but for now I want to just pretend that all that context doesn't exist.
 
 Let's do a motivating example: I'm writing a bit of software in Java related to image processing. 
 I want to:
@@ -37,7 +37,7 @@ I want to:
 3. Process the image to said creator's specifications
 4. Send the image to the creator's destination
 5. Send the creator a notification to their notification email
-6. Return the proccessed image
+6. Return the processed image
 
 There's only one problem: *any* of those values might be null.
 Any of them.
@@ -73,7 +73,7 @@ And I always do the same thing, too: I just bail.
 This seems like something that can be abstracted away rather nicely, doesn't it?
 I think so!
 Let's say that we have a "magical" (it's not magic at all but we're working backwards so suspend disbelief for a bit) context that gets rid of this crap.
-We no longer need to care that these values are Maybe nonexistant.
+We no longer need to care that these values are Maybe nonexistent.
 
 Let's see what that might look like, shall we?
 
@@ -180,7 +180,7 @@ Actually, for lists, return has the simplest definition you could think of:
     return a = [a]
 ```
 
-So, really, getting each allergy is pretty redundent.
+So, really, getting each allergy is pretty redundant.
 `allergiesFor` is a list already.
 So we can simplify to:
 
@@ -306,7 +306,7 @@ Well, first off, let's consider those `f`s.
 They're the context.
 The crap we don't want to have to deal with.
 So, we have some function which takes a value of type `a` and turns it into a value of type `b`.
-These don't neccisarily have to be different, of course, but they're allowed to be.
+These don't necessarily have to be different, of course, but they're allowed to be.
 We also have a value of type `f a`, or "An `a` wrapped up in some crap I don't want to deal with".
 `fmap` lets us "mush" those two things together: it takes care of the crap we don't want to deal with, applies our function, and re-wraps it nicely in crap we don't want to deal with so we can deal with it later.
 
@@ -376,7 +376,7 @@ getLineUpper = fmap toUpper getLine
 
 Pretty easy, though!
 
-## Getting Slighty Weirder with Applicative
+## Getting Slightly Weirder with Applicative
 
 Okay, so we have `Functor` down.
 Now, the next thing a Monad needs is an instance of `Applicative`.
@@ -420,7 +420,7 @@ They take a *pure* value&mdash;a beautiful, clean, wonderful value with none of 
 They add the crap we don't want to deal with.
 This might seem pretty useless at first, but there's cases where it's quite nice.
 If you have a function that takes a `Maybe Int`, and in this case you just have an `Int`, you can use `pure` to make things work.
-You're still forcing yourself to deal with the possible non-existance of that value, of course, but if the rest of your program is set up to deal with that, it's a lot easier than re-writing everything for just using an `Int`.
+You're still forcing yourself to deal with the possible non-existence of that value, of course, but if the rest of your program is set up to deal with that, it's a lot easier than re-writing everything for just using an `Int`.
 There's plenty of other cases where this works out as well.
 
 ### Pick your poison: `liftA2` or `<*>`.
@@ -428,7 +428,7 @@ There's plenty of other cases where this works out as well.
 Now, you may have noticed something a bit odd: both `liftA2` and `<*>` have definitions, *in terms of each other*.
 So `<*>` is, by default, `liftA2 id`.
 Meanwhile, `liftA2 f x` is defined as `(<*>) (fmap f x)`!
-They're mutually recurisve.
+They're mutually recursive.
 
 This doesn't mean that using either puts you in an infinite loop.
 It instead means that you must *define one or the other*.
@@ -436,7 +436,7 @@ You can also define both if that makes sense for what you're doing: maybe it'll 
 
 Let's look at each individually:
 
-#### `<*>` takes a function and values in context
+#### `<*>` evaluates things in a context
 The `<*>` operator has a signature of `f (a -> b) -> f a -> f b`.
 So, it takes a function in a context.
 That function takes an `a` and returns a `b`.
@@ -458,3 +458,376 @@ addFour x = x + 4
 So, in this case, we have function(s) in a context we don't want to have to deal with.
 We also have integer(s) in a context we don't want to have to deal with.
 `<*>` takes care of all the context for us.
+It's quite hard to see why you might use this in the monads we've looked at so far.
+After all, when are you going to put a function in a context?
+
+Well, we could come up with a contrived example where there's some dictionary of validation functions and we want to look up a function in the dictionary and run it against some input, where either the input or the function may not exist, but it's quite hard to see where that would be useful in practice.
+So, for now, we'll just leave this as "something which is kind of nice to have."
+
+### `liftA2` evaluates contextual things smartly
+
+Okay, so what is the signature of `liftA2`?
+
+```haskell
+liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+```
+
+Hm. So, we have a binary function, a value in context, another value in context, and an output value in context.
+That sounds a lot like `fmap` but for functions with two arguments.
+This is a bit easier to see a use for:
+
+```haskell
+-- | A function which adds two integers, assuming those integers exist
+maybeAdd :: Maybe Int -> Maybe Int -> Maybe Int
+maybeAdd x y = (liftA2 (+)) x y
+```
+
+So, why not just use two fmaps?
+Well, in some monads, this can be a *lot* more efficient, because `fmap` is really expensive.
+Those we'll leave to a different blog post.
+
+### The Already Defined: Sequencing Operations
+
+Now, the last two members are a lot easier:
+
+```haskell
+-- | Sequence actions, discarding the value of the first argument.
+    (*>) :: f a -> f b -> f b
+    a1 *> a2 = (id <$ a1) <*> a2
+
+    -- | Sequence actions, discarding the value of the second argument.
+    (<*) :: f a -> f b -> f a
+    (<*) = liftA2 const
+```
+
+These work similarly to `<$`, in that they're also for *replacing* contexts.
+It should be noted that these *sequence* actions before discarding the argument.
+Let's look at the `Maybe` monad, for example:
+
+```haskell
+(Just 10) <* Nothing
+-- = Nothing
+Nothing *> (Just 10)
+-- = Nothing
+(Just 10) *> (Just 12)
+-- = 12
+(Just 10) <* (Just 12)
+-- = 10
+```
+
+You can think of these as useful for establishing a dependency.
+If I write `(a *> b)` in the `Maybe` monad, for example, it's saying "Use b, but only if a exists."
+Similarly, `(getLine <* getLine)` says "Go get two lines from the big scary real world, and then discard the first and return the second, but make sure you actually get both."
+If we use `*>` instead, it says "Go get two lines from the real world, and then discard the second and return the first, but make sure you actually get both."
+
+The way this works in the `List` monad is slightly bizarre:
+
+```haskell
+[1, 2] *> ["Hack", "Fraud"]
+-- = ["Hack","Fraud","Hack","Fraud"]
+[1, 2] <* ["Hack", "Fraud"]
+-- = [1,1,2,2]
+```
+
+However, this is basically how `<$` worked.
+We take each value in our list context, and replace it with the values in the other context.
+That's fairly simple.
+
+That wraps up Applicative. We're finally at the main event!
+
+## Monads: Or, "How has this blog post been so long without even mentioning the `>>=` operator"
+
+Now, we're finally at monads.
+Let's think for a bit here about what we have already.
+
+- `fmap` lets us take apply a function to a value that's wrapped up in some crap we don't want to deal with.
+- `<$` lets us replace a value that's wrapped up in some crap we don't want to deal with.
+- `<*>` gives us the power to take a function that's wrapped up in some crap we don't want to deal with, and apply it to an argument that's also wrapped up in some crap we don't want to deal with.
+- `lift2A` lets us take a binary function and apply it to two values that are wrapped up in some crap we don't want to deal with.
+- `*>` lets us take two things wrapped up in some crap we don't want to deal with and establish that they are dependent, discarding the first thing
+- `<*` lets us take two things wrapped up in some crap we don't want to deal with and establish that they are dependent, discarding the second thing
+
+So, now we're finally able to arrive at the mighty, mighty `Monad`
+Let's look at what this is:
+
+```haskell
+class  Monad m  where
+
+    (>>=)       :: m a -> (a -> m b) -> m b
+    
+    (>>)        :: m a -> m b -> m b
+     m >> k      = m >>= \_ -> k
+
+    return      :: a -> m a
+
+    fail        :: String -> m a
+    fail s      = error s
+```
+
+We've done it.
+We've typed `>>=`.
+Hopefully, with the motivation first, then building up, I can explain what it does in a way that makes sense.
+
+### `>>=` combines two separate sources of crap you don't wanna deal with
+
+Okay, let's say I have a problem.
+I've got two functions:
+
+```haskell
+findMagicValue :: Int -> Maybe Int
+
+convertToMagicString :: Int -> Maybe String
+```
+
+One, `findMagicValues`, takes an `Int` and returns a `Maybe Int`
+The other, `convertToMagicString`, takes an `Int` and returns a `Maybe String`.
+I wanna compose them together: Take an `Int`, get the magical translation of that `Int`, and then get the magic `String`. 
+But, as is becoming common, the fact that these values might not exist is crap that I don't want to deal with.
+
+Your first thought might be to do something like this:
+
+```haskell
+doFull :: Int -> Maybe String
+doFull x = fmap convertToMagicString (findMagicValue x)
+```
+
+But there's a problem.
+There's a rather big problem, actually.
+The problem is that `fmap` puts the result *back* in the context that you're trying to ignore.
+So, when `convertToMagicString` returns a `Maybe String`, `fmap` will gladly put it back into the original `Maybe` context, netting you a `Maybe (Maybe String)`.
+That is definitely *not* what you wanted!
+`Maybe (Maybe x)` *never* makes sense.
+Something is either there or it's not.
+It can't be there on one level and then not there on another!
+
+Thankfully, we have `>>=` to the rescue.
+When you have two sources of crap that you don't want to deal with, `>>=` rather smartly combines them together.
+So, when we write:
+
+```haskell
+doFull x = findMagicValue x >>= convertToMagicString
+```
+
+It works like this:
+
+1. First, it evaluates `findMagicValue x`, netting you a `Maybe Int`
+2. `>>=` takes the `Int` out of the crap you don't care about (the fact that it might not exist)
+3. `>>=` runs the `convertToMagicString` function, which returns a string wrapped in *the same* crap you don't care about (since it also might not exist), and returns that value!
+
+You can use `>>=` when you have *two* sources of *the same* context.
+Let's think about lists for a moment.
+How about we go back to a familiar function:
+
+```haskell
+getGuests :: Party -> [Guest]
+```
+
+We used this way up when we were still doing `do` notation: it takes a party, and gets a list of guests at that party.
+Let's say we have a list of parties, and want a big list of all the guests.
+Well, we have some parties in a context (a list), and a function that takes a party with no context and returns guests in *the same* context (a list).
+We have two sources of the same context, so it's time for `>>=`:
+
+```haskell
+getAllGuests :: [Party] -> [Guest]
+getAllGuests parties = parties >>= getGuests
+```
+
+Wow!
+
+Now, what about `IO`?
+Well, let's think about this for a minute.
+What if we want to get a string from the user and print it?
+Well, `getLine` gets us an `IO String`, or a string wrapped up in the context of the scary real world.
+`putStrLn` takes a `String`, and returns an `IO ()`, which is nothing, but wrapped up in the context of this horrific time-sensitive nightmare we call reality.
+Both functions add a source of the real world&mdash;both functions add *some crap we don't care about*.
+This makes writing a function that echoes a line *trivial*.
+Behold:
+
+```haskell
+echoLine :: IO ()
+echoLine = getLine >>= putStrLn
+```
+
+### `return` is literally just `pure`
+`return` takes a beautiful, pure value, and wraps it up in some context.
+AKA literally just `pure`.
+In fact, a well-form monad is *required* to define it so it does exactly the same as `pure`.
+
+But wait, you say, why the hell does this even exist when I have `pure` already?
+Well, that has a bit of history to it!
+`Monad`s, for quite a while, weren't required to also be `Applicative`s.
+However, eventually the guys who write the Haskell compiler realized that essentially *every single monad was an applicative*, so they just made it a requirement.
+The `pure`/`return` thing is the outcome of when they were separate, and it's too late to change now.
+Sorry.
+
+### `>>` is literally just `*>`.
+
+Yeah. 
+Same reason as above.
+
+### `fail` was probably a mistake
+
+`fail` is a way for your monad to break.
+It exists purely because of `do` notation, which we'll get to later.
+A lot of the time calling `fail` will crash your program.
+Sometimes, however, there's a sensible failure state.
+`fail` in the Maybe monad returns `Nothing`, for example.
+`fail` in the `List` monad returns `[]`.
+But, generally, it's not a good idea to ever use fail.
+So just... don't.
+
+## Back to the Beginning: Or, all that `do` stuff was really just a bunch of `>>=` and such
+
+And now we come full circle.
+We're back to `do` notation, what we used earlier.
+As it turns out, `do` is just a sneaky way to use `>>=` and `>>` that looks a bit nicer.
+Let's take one of our examples and de-sugar it to the proper format:
+
+```haskell
+-- Take a list of parties, return a list of allergies
+getAllergies :: [Party] -> [Allergy]
+getAllergies parties = do
+    party <- parties
+    guest <- guestsFor party
+    allergiesFor guest
+```
+
+This becomes:
+
+```haskell
+-- Take a list of parties, return a list of allergies
+getAllergies :: [Party] -> [Allergy]
+getAllergies parties = parties >>= \party -> 
+        guestsFor party >>= \guest -> 
+            allergiesFor guest
+```
+
+That `\party ->` notation is a lambda, in case you haven't seen those in Haskell.
+Here's the rough equivalent of this in a language you *might* know, Ruby.
+We'll use `.bind` as an equivalent for `>>=`
+
+```ruby
+def get_allergies parties
+    parties.bind do |party|
+        party.guests.bind do |guest|
+            guest.allergies
+        end
+    end
+end
+```
+
+Right now you may be thinking "Hey, wait a minute... Ruby has something that looks like that!"
+
+```ruby
+def get_allergies party
+    parties.flat_map do |party|
+        party.guests.flat_map do |guest|
+            guest.allergies
+        end
+    end
+end
+```
+
+Yep. Ruby's got monads. Kinda.
+
+Let's look at a different example, this time in `IO`:
+
+```haskell
+main = do
+    input <- getLine
+    putStrLn input
+    putStrLn (toUpper input)
+    return ()
+```
+
+This desugars to:
+
+```haskell
+main = do
+    getLine >>= \input -> 
+        putStrLn input >> \_ ->
+            putStrLn (toUpper input) >> \_ ->
+                return ()
+```
+
+Essentially, if you don't use `<-` to bind the return value to a name, it uses the `>>` instead.
+Remember, `>>` is `*>`, and `*>` establishes a dependency and ignores the first value.
+So, if we write:
+
+```haskell
+main = do
+    putStrLn "Wow"
+    getLine
+```
+
+We're saying "We need to run `putStrLn "Wow"` first, then run `getLine`, but we only really care about the return value of the second thing."
+
+`do` notation is especially interesting because it gets rid of *all* the crap we didn't want to care about.
+Sure, `fmap` and `>>=` help us quite a bit, but we still need to care about writing all those symbols.
+With `do` notation that's abstracted away.
+We can completely remove all the crap we don't care about.
+All the context melts away, and we can actually write the stuff we give a crap about.
+
+## Surprisingly Powerful
+It turns out that this idea of "let's ignore the context we don't care about" applies in a lot of places.
+We went over a few at the start of this blog post, but there's nearly infinitely more.
+If you're writing a parser, for example, you can wrap everything in a `Monad` where that context is *parsing*.
+So if you want to parse math, you can do something like:
+
+```haskell
+-- given these
+parseOperator :: Parser Operator
+parseNumber :: Parser Integer
+
+parseEquation :: Parser (Integer, Operator, Integer)
+parseEquation = do
+    lhs <- parseNumber
+    op <- parseOperator
+    rhs <- parseNumber
+    return (lhs, op, rhs)
+```
+
+You know what an equation looks like, so why the hell should you care about the fact that you're really parsing something?
+There's no reason to handle where you are in a string or anything like that.
+It's all *crap you do not care about*.
+
+Or maybe you're in a banking system, and you want to do certain transactions.
+If somebody transfers money, for example, you want to *make sure* that the money leaves their account, then goes into the other account, with no chance of failure in-between.
+In a multithreaded environment ensuring that could be hard.
+You could easily hit a deadlock if you just lock every account in a transaction every time you update anything.
+
+But, wait a minute.
+The fact that we need to do everything at once?
+That really sounds like *crap we don't care about*.
+So how about we write a nice monad for it:
+
+```haskell
+-- Given these:
+-- Take money away from an account
+subtractBalance :: AccountId -> Integer -> Transactional ()
+-- Add money to an account
+addBalance :: AccountId -> Integer -> Transactional ()
+-- Actually affect the "real world", performing the entire transaction, or none of it
+runTransaction :: Transactional a -> IO a
+
+-- We can write:
+performTransfer :: AccountId -> AccountId -> Integer -> IO ()
+-- the $ is a syntax thing that lets us pass a do block as an argument to a function
+performTransfer from to amount = runTransaction $ do
+    subtractBalance from amount
+    addBalance from amount
+```
+
+It may be a bit tricky to properly write a `Transactional` monad that works as advertised (the real hard part is `runTransaction`) but assuming it does, actually using it is trivial.
+How exactly transactions are accomplished doesn't matter.
+Thankfully, by the way, somebody else has [written a transactional library for us](https://hackage.haskell.org/package/stm) that works properly.
+
+## Finale
+
+So, this has (likely) been a nice extended demonstration of Crockford's law and my own ineptitude at actually understanding monads.
+Assuming this post was in any way effective, however, I do hope that it's made them seem a bit less scary, but also a bit less... for lack of a better term, *meme-ey*.
+"It's just a monoid in the category of endofunctors" is a great joke, but Monads are actually really cool, because they let you be lazy.
+Not as in lazy evaluation&mdash;as in "wearing the same shirt four times in a row to avoid doing laundry."
+When you're trying to get work done, being able to *ignore crap you don't care about* is insanely valuable.
+Used properly, monads allow one to be very productive, while maintaining a very high level of safety!
+
