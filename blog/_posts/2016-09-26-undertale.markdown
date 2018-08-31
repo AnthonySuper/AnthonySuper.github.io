@@ -79,7 +79,7 @@ I *had* to make something.
 I just had to.
 
 So, after I sobered up a bit and realized how shit the idea was, I deleted the documents,and filed what little good concepts it contained in my mental "for later" drawer.
-I came up with another concept, a fusion of previous ideas I'd had, before Undertal even came out.
+I came up with another concept, a fusion of previous ideas I'd had, before Undertale even came out.
 Now, if this idea ever *does* wind up being made, I still think the inspiration will be clear, but this particular idea turns away from being a ripoff and into its own piece of artwork.
 
 Unfortunately, I was quickly reminded of why Gamedev sucks, so I gave up on it fairly quickly.
