@@ -55,7 +55,7 @@ export class ScrollAnimator {
 
   update(scroll) {
     if(! this.shouldAnimate) return;
-  	let { offsetHeight, scrollTop } = this;
+    let { offsetHeight, scrollTop } = this;
     let toBottom = window.innerHeight - this.elm.getBoundingClientRect().top;
     if(toBottom < 0) return;
     let percentVisible = toBottom / window.innerHeight;
@@ -75,16 +75,17 @@ export class ScrollAnimator {
       this.hasCompleted = false;
     }
   }
+}
 
-
+function frameListener(elms, fr) {
+  let counter = 0;
+  return function animate() {
+    if(counter % fr == 0) {
+      elms.forEach(a => a.update());
+    }
+    window.requestAnimationFrame(animate);
+  }
 }
 
 
-export let ready = () => {
-	let elmList = document.querySelectorAll("[data-scroll-animate]");
-	let elms = Array.prototype.slice.call(elmList);
-	let animators = elms.map(e => new ScrollAnimator(e));
-	window.addEventListener("scroll", () => {
-		animators.map(an => an.update());
-	}, { passive: true });
-};
+export let ready = () => {};
