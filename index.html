@@ -9,280 +9,228 @@ layout: home
     <h1 class="fancy-header" id="name-header">
       Anthony Super
     </h1>
-
-    <ul class="big-center-list nouns-list">
-      <li class="noun">
-        Developer
-      </li>
-      <li class="noun">
-        Writer
-      </li>
-      <li class="noun">
-        Dabbler
-      </li>
-    </ul>
   </section>
 
-  <section class="developer" data-scroll-animate="color-in-black">
-    <h2 data-scroll-animate="blur-in" class="big-center-title">
-      Developer
-    </h2>
+  <section class="developer-container">
+    <section class="developer-info" data-scroll-animate="color-in-black">
+      <h2 data-scroll-animate="blur-in" class="big-center-title">
+        I code stuff
+      </h2>
 
-    <div class="info-blurb">
-    <p>
-    	I've been programming for around five years now, and every day feels just as fun as the first time I opened Vim.
-     	I have the most experience with Full-Stack web development, with a slightly larger emphasis on the backend.
-     	I've also been programming in C++ more and more recently, and I've been really enjoying it.
- 	  </p>
-     <p>
-     	As part of my developer career, I started a company: <a href="http://noided.media">Noided Media LLC</a>.
-     	Me and a friend worked on a project for several years.
-     	He sought other opportunities around a year ago.
-     	I've stayed with it, and currently have a new team working on something radically different from what we were doing before.
-      More information on that front will be coming soon.
-     </p>
-     <p>
-     	A detailed explanation of various projects I've worked on is available below.
-     </p>
-    </div>
+      <div class="project-showcase">
+        <section class="frontpage-project raytrace">
+          <img src="/assets/projects/raytrace.png" 
+          data-scroll-animate="scale-in"
+          data-scroll-animate-oneshot="true">
+          <div class="content">
+            <div class="padding-hack">
+              <h4>Raytrace</h4>
+              <div class="time">
+                Fall 2017&mdash;Winter 2017
+              </div>
+              Raytrace is a raytracer I wrote for a class.
+              It can do the basic features, includes a BVH optimization structure, and supports texture map.
+              It's built in C++14.
+              Find it, and example images, <a href="https://github.com/AnthonySuper/Raytrace">here</a>.
 
-    <div class="project-showcase">
-      <section class="frontpage-project raytrace">
-        <img src="/assets/projects/raytrace.png" 
-        data-scroll-animate="scale-in"
-        data-scroll-animate-oneshot="true">
-        <div class="content">
-          <div class="padding-hack">
-            <h4>Raytrace</h4>
-            <div class="time">
-              Fall 2017&mdash;Winter 2017
             </div>
-            Raytrace is the (unimaginative) name of a from-scratch Raytracer I wrote as part of a class.
-            Raytrace is written in C++14, and features recursive ray tracing, parallel rendering, a BVH, refractions, texture mapping, and more. 
-            The class allowed us to use a linear algebra library, but I opted to write this myself, in order to learn more.
-            <p>
-            The code for Raytrace, and some example images, can be found <a href="https://github.com/AnthonySuper/Raytrace">here</a>.
-            </div> 
-          </div>
-        </section>
-        <section class="frontpage-project diceroll">
-          <img src="/assets/projects/diceroll-optimized.svg" 
-          data-scroll-animate="scale-in"
-          data-scroll-animate-oneshot="true">
-          <div class="content">
-            <div class="padding-hack">
-              <h4>Diceroll</h4>
-              <div class="time">
-                Summer 2017
-              </div>
-              Diceroll is a Ruby program to calculate dice formulas, and the resulting probability of those formulas.
-              This allows a user to ask a question like "What are the chances my rolls total 28 when I roll six six-sided dice, then flip a coin and double the result if it's heads?" (which is 2.4%, roughly).
-              The code can be found <a href="https://github.com/AnthonySuper/FifthedSim">here</a>.
-            </div> 
-          </div>
-        </section>
-        <section class="frontpage-project toonpunk">
-          <img src="/assets/projects/toonpunk.png" 
-          data-scroll-animate="scale-in"
-          data-scroll-animate-oneshot="true">
-          <div class="content">
-            <div class="padding-hack">
-              <h4>Toonpunk</h4>
-              <div class="time">
-                August 2017&mdash;Present
-              </div>
-              I developed the Website for ToonPunk, an RPG system where you play as cartoon criminals in a cyberpunk future.
-              I used Jekyll to build said website (much like the one you're on now).
-              While I did not fully design the site myself, I did adapt an existing design (made by the author of the project) to be responsive, and to look a bit nicer.
-              <p>
-                The website can be found <a href="http://toonpunkgame.com">here</a>.
-              </p>
+          </section>
+          <section class="frontpage-project diceroll">
+            <img src="/assets/projects/diceroll-optimized.svg" 
+            data-scroll-animate="scale-in"
+            data-scroll-animate-oneshot="true">
+            <div class="content">
+              <div class="padding-hack">
+                <h4>Diceroll</h4>
+                <div class="time">
+                  Summer 2017
+                </div>
+                Diceroll lets you answer questions like "What are the chances my rolls total 28 when I roll six six-sided dice, then flip a coin and double the result if it's heads?" analytically (which is 2.4%, roughly).
+                It's written in ruby.
+                Find it <a href="https://github.com/AnthonySuper/FifthedSim">here</a>.
+              </div> 
             </div>
-          </div>
-        </section>
-
-        <section class="frontpage-project lgs">
-          <img src="/assets/projects/lgs.png" 
-          data-scroll-animate="scale-in"
-          data-scroll-animate-oneshot="true">
-          <div class="content">
-            <div class="padding-hack">
-              <h4>LGS Innovations</h4>
-              <div class="time">
-                Summer 2017
+          </section>
+          <section class="frontpage-project toonpunk">
+            <img src="/assets/projects/toonpunk.png">
+            <div class="content">
+              <div class="padding-hack">
+                <h4>Toonpunk</h4>
+                <div class="time">
+                  August 2017&mdash;Present
+                </div>
+                ToonPunk is an RPG system where you play as a cartoon in a cyberpunk future.
+                I rewrote the website for it and improved the design.
+                Find that website <a href="http://toonpunkgame.com">here</a>.
               </div>
-              I interned at LGS innovations during the Summer in 2017.
-              This internship was enlightening and gave me experience with Node-based backend development (using LGS's propriety in-house framework, BITS) sa well as with Polymer for the front-end.
-              I also interacted with open-source Cellular Base Station Routers.
-              <p>
-                Unfortunately, the exact nature of the project I built is not public knowledge, but they do plan on using it in production soon.
-              </p>
-            </div> 
-          </div>
-        </section>
+            </div>
+          </section>
 
-        <section class="frontpage-project imagehex">
-          <img src="/assets/projects/imagehex.svg" 
-          data-scroll-animate="scale-in"
-          data-scroll-animate-oneshot="true">
-          <div class="content">
-            <div class="padding-hack">
-              <h4>ImageHex</h4>
-              <div class="time">
-                Late 2014&mdash;Late 2016
+          <section class="frontpage-project lgs">
+            <img src="/assets/projects/lgs.png">
+            <div class="content">
+              <div class="padding-hack">
+                <h4>LGS Innovations</h4>
+                <div class="time">
+                  Summer 2017
+                </div>
+                I interned at LGS Innovations during the summer of 2017.
+                With the help of my team, I used an in-house Node.JS framework to provide a user interface for interacting with an SDR.
+                We wrote the frontend for the website in Polymer.
+                I also wrote an android port of a python machine learning program to do a type of threat analysis.
+                All of my work there was proprietary and under NDA, so sadly I cannot link it.
+              </div> 
+            </div>
+          </section>
+
+          <section class="frontpage-project imagehex">
+            <img src="/assets/projects/imagehex.svg" 
+            data-scroll-animate="scale-in"
+            data-scroll-animate-oneshot="true">
+            <div class="content">
+              <div class="padding-hack">
+                <h4>ImageHex</h4>
+                <div class="time">
+                  Late 2014&mdash;Early 2016
+                </div>
+                ImageHex was an art website.
+                It had features for sharing and finding art, as well as a commisions feature.
+                Me and a partner used Rails for the backend, PostgreSQL for the database, and some React.JS on the frontend.
+                Sadly, it didn't find a marketplace.
+                It is now defunct, but you can find the source code <a href="https://github.com/noidedmedia/ImageHex">here</a>
+              </div> 
+            </div>
+          </section>
+
+
+          <section class="frontpage-project fictiondock">
+            <img src="/assets/projects/fictiondock.svg">
+            <div class="content">
+              <div class="padding-hack">
+                <h4>FictionDock</h4>
+                <div class="time">
+                  June&mdash;August, 2015
+                </div>
+                FictionDock was a fanfiction website.
+                Me and a friend made it to help us learn webdev technologies.
+                I designed and built the backend using Ruby on Rails, and did much of the frontend JavaScript Development.
+                Although the site is no longer active, you can find the source code <a href="https://github.com/noidedmedia/Fiction-Dock">here</a>.
+              </div> 
+            </div>
+          </section>
+
+          <section class="frontpage-project wavhead">
+            <img src="/assets/projects/wavhead.svg" 
+            data-scroll-animate="scale-in"
+            data-scroll-animate-oneshot="true">
+            <div class="content">
+              <div class="padding-hack">
+                <h4>WavHead</h4>
+                <div class="time">
+                  October 2014
+                </div>
+                WavHead was the first webdev project I ever embarked on.
+                It lets guests at a party vote on what song to play next.
+                It stores the songs in SQLite, and serves them up with Sinatra.
+                Find it <a href="https://github.com/noidedmedia/WavHead">here.</a>
               </div>
-              ImageHex is an art website.
-              It has features for sharing and finding art, as well as a powerful commissions feature.
-              ImageHex was Noided Media LLC's primary project for many years.
-              Unfortunately, however, we could never quite hit our target market.
-              It is no longer under active development.
-              A version of the website is still active <a href="https://www.imagehex.com">here</a>.
-              <p>
-                ImageHex used PostgreSQL (with some fairly complicated queries) as its database as Rails as its backend server.
-                The frontend was made in a mix of static HTML and React.js.
-                We also leveraged Redis for caching, S3 for Image hosting, and Heroku for site hosting.
-              </p>
-            </div> 
-          </div>
-        </section>
+            </div>
+          </section>
+      </div>
+    </section>
 
+    <section class="developer-sidebar">
+      <h2 class="mid-center-title">Skill Breakdown:</h2>
+      <ul class="developer-skills">
+        <li class="developer-skill">
+          <h3>Ruby</h3>
 
-        <section class="frontpage-project fictiondock">
-          <img src="/assets/projects/fictiondock.svg" 
-          data-scroll-animate="scale-in"
-          data-scroll-animate-oneshot="true">
-          <div class="content">
-            <div class="padding-hack">
-              <h4>FictionDock</h4>
-              <div class="time">
-                June&mdash;August, 2015
-              </div>
-              FictionDock is a fanfiction website.
-              Me and a friend made it on a whim to learn new web development technologies.
-              I designed and built the backend using Ruby on Rails, and did much of the frontend JavaScript Development.
-              Although the site is no longer active, the source code can be found <a href="https://github.com/noidedmedia/Fiction-Dock">here</a>.
-            </div> 
+          <div class="skill-label">
+            <progress max="100" value="90"></progress>
+            <span>Expert</span>
           </div>
-        </section>
+        </li>
+        <li class="developer-skill">
+          <h3>Rails</h3>
 
-        <section class="frontpage-project wavhead">
-          <img src="/assets/projects/wavhead.svg" 
-          data-scroll-animate="scale-in"
-          data-scroll-animate-oneshot="true">
-          <div class="content">
-            <div class="padding-hack">
-              <h4>WavHead</h4>
-              <div class="time">
-                October 2014
-              </div>
-              WavHead was the first webdev project I ever embarked on.
-              The idea was to have a democratic DJ&mdash;a system where party goers could vote on what song to play next.
-              It actually turned out fairly well.
-              <p>
-                WavHead was built in Sinatra, using an SQLite database to store song information.
-                The frontend was mostly Vanilla JS, and I built it with the help of a friend.
-                The promo website we made for it is <a href="https://github.com/noidedmedia/WavHead">here.</a>
-              </p>
-            </div> 
+          <div class="skill-label">
+            <progress max="100" value="75"></progress>
+            <span>Advanced</span>
           </div>
-        </div>
-      </section>
-    </div>
+        </li>
+        <li class="developer-skill">
+          <h3>JavaScript</h3>
+          <div class="skill-label">
+            <progress max="100" value="75"></progress>
+            <span>Advanced</span>
+          </div>
+        </li>
+        <li class="developer-skill">
+          <h3>React</h3>
+          <div class="skill-label">
+            <progress max="100" value="75"></progress>
+            <span>Advanced</span>
+          </div>
+        </li>
+        <li class="developer-skill">
+          <h3>CSS</h3>
+          <div class="skill-label">
+            <progress max="100" value="60"></progress>
+            <span>Intermediate</span>
+          </div>
+        </li>
+        <li class="developer-skill">
+          <h3>C++</h3>
+          <div class="skill-label">
+            <progress max="100" value="60"></progress>
+            <span>Intermediate</span>
+          </div>
+        </li>
+        <li class="developer-skill">
+          <h3>Java</h3>
+          <div class="skill-label">
+            <progress max="100" value="50"></progress>
+            <span>Moderate</span>
+          </div>
+        </li>
+        <li class="developer-skill">
+          <h3>Haskell</h3>
+          <div class="skill-label">
+            <progress max="100" value="40"></progress>
+            <span>Moderate</span>
+          </div>
+        </li>
+        <li class="developer-skill">
+          <h3>Python</h3>
+          <div class="skill-label">
+            <progress max="100" value="25"></progress>
+            <span>Beginner</span>
+          </div>
+        </li>
+      </ul>
+    </section>
   </section>
 
   <section class="writer">
     <h2 data-scroll-animate="blur-in" class="big-center-title">
-      Writer
+      I write stuff
     </h2>
 
-    <div class="info-blurb">
-      I don't write as often as I should&mdash;unfortunately, writing takes time, which I don't have much of&mdash;but I love writing.
-      I maintain a <a href="/blog">blog</a> which discusses both technology and culture.
-      I also work on original fiction on occasion, although (sadly) I rarely get the chance to do so as of late.
+    <div class="laconic-blurb">
+      Most of it on <a href="/blog">this blog</a>.
     </div>
-  </section>
-
-  <section class="serial-dabbler">
-    <h2 data-scroll-animate="blur-in" class="big-center-title">
-      Dabbler
-    </h2>
-
-    <div class="info-blurb">
-      I've never been one to say no to trying new things, and a huge variety of topics interest me.
-      As a result, I've played around in a variety of fields.
-      I wouldn't say I have deep knowledge of any of these, but they're topics that interest me, and I'm at least familiar with them.
-    </div>
-
-    <section class="dabble">
-      <div class="dabble-image-container">
-        <img src="assets/dabbles/fcp.png" 
-          data-scroll-animate="rotate-in"
-          data-scroll-animate-max="0.5"
-          data-scroll-animate-oneshot="true">
-      </div>
-      <div class="dabble-content">
-        <h3>Video Editing</h3>
-        I've enjoyed Video Editing ever since I took a class on it in 7th grade.
-        I made a hobby of it, creating a few joke videos with my friends (that are sadly now lost to time and deleted Youtube accounts).
-        <p>
-        I had the opportunity to apply my skills professionally twice.
-        In the first case, I recorded and editing a training session for Aleo Solar, which was to be used as part of their proposed merger with Bosch.
-        I delivered the videos, and the merger sadly fell through.
-        In the second, I recored a series of videos focused at marketing to donors for a Denver-based woman's health clinic. 
-      </div>
-    </section>
-
-    <section class="dabble">
-      <div class="dabble-image-container">
-        <img src="assets/dabbles/logic_pro.png" 
-          data-scroll-animate="rotate-in"
-          data-scroll-animate-max="0.5"
-          data-scroll-animate-oneshot="true">
-      </div>
-      <div class="dabble-content">
-        <h3>Musical Production</h3>
-        I played various low brass instruments in the years up to college, which started a general affinity for music which has persisted for my entire life.
-        As part of this, I briefly played around with musical production.
-        The result of that is <a href="https://soundcloud.com/somemoron">here.</a>
-      </div>
-    </section>
-
-    <section class="dabble">
-      <div class="dabble-image-container">
-        <img src="assets/dabbles/math.svg" 
-          data-scroll-animate="rotate-in"
-          data-scroll-animate-max="0.5"
-          data-scroll-animate-oneshot="true">
-      </div>
-      <div class="dabble-content">
-        <h3>Math</h3>
-        I've loved math for (however cliché it may be) essentially as long as I can remember.
-        I got a minor in mathematics at CSU, and I intentionally took more math-heavy classes during my time there.
-        I don't consider myself a mathematician&mdash;you need at least a bachelors for that&mdash;but I do love the topic, and often read on it.
-      </div>
-    </section>
-
-    <section class="dabble">
-      <div class="dabble-image-container">
-        <img src="assets/dabbles/skiing.svg" 
-          data-scroll-animate="rotate-in"
-          data-scroll-animate-max="0.5"
-          data-scroll-animate-oneshot="true">
-      </div>
-      <div class="dabble-content">
-        <h3>Skiing</h3>
-        <span title="Unlike Frank Ocean.">I live in Denver</span>, and I take advantage of the resulting access to the slopes.
-        I'm not a fantastic skier, but I do enjoy it, and take trips semi-often during the season.
-      </div>
-    </section>
   </section>
 
   <section class="contact" 
     data-scroll-animate="darken-in" 
     data-scroll-animate-max="0.5">
      <h1 class="fancy-header" id="name-header" data-scroll-animate="blur-in">
-      Let's Get in Touch
+      I'll talk if you want
     </h1>
+
+    <div class="laconic-blurb">
+      If you want to get in touch, use one of the following:
+    </div>
 
     <div class="contact-list">
       <div>
