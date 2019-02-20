@@ -13,9 +13,8 @@ export const Code = (props) =>  {
     loader,
     render: (loaded, p) => {
       let { lang, Lowlight } = loaded;
-      Lowlight = Lowlight.default;
+      console.log(loaded);
       if(lang) {
-        lang = lang.default;
         Lowlight.registerLanguage(props.language, lang);
       }
       return <Lowlight

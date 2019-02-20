@@ -69,11 +69,9 @@ export const Code = (props) =>  {
     // We capture the props above, so we don't use them.
     render: (loaded, _) => {
       let { lang, Lowlight } = loaded;
-      Lowlight = Lowlight.default;
       // If we found a language to highlight with, register it.
       // This allows us to use it to highlight later on.
       if(lang) {
-        lang = lang.default;
         Lowlight.registerLanguage(props.language, lang);
       }
       return <Lowlight
