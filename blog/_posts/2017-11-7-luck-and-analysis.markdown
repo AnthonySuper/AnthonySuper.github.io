@@ -76,7 +76,7 @@ Then, one day, I decided to try to find the distribution of `36d6`, which took a
 What the hell was going on?
 
 
-## A Critial Failure
+## A Critical Failure
 
 Well, after struggling to optimize the above code, I was getting nowhere.
 So I decided that I should probably start trying to think about the big-O complexity of the actual algorithm.
@@ -96,7 +96,7 @@ $$
 \sum_{k = 1_{}}^{n - 1} d * (d + (d - 1) * (k - 1))
 $$
 
-Plugging this into Wolfram alpha (because I'm awful at summation analysis) nets us a formula that is $$ \mathcal{O}(d^2n^2) $$.
+Plugging this into Wolfram Alpha (because I'm awful at summation analysis) nets us a formula that is $$ \mathcal{O}(d^2n^2) $$.
 For something like 100d10, that's pretty expensive!
 
 
