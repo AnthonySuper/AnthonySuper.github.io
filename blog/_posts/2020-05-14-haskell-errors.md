@@ -430,7 +430,7 @@ Main.hs:7:3: error:
 
 ```
 
-This, of course, happens because `(->) a` is a Monad
+This, of course, happens because `(->) a` is a Monad.
 I actually *very much like* the existence of said Monad, perhaps controversially.
 It makes writing some code, especially code that converts between two similar types (an internal representation and the public type of a webserver, for example) very easy.
 However, it makes error messages caused by forgetting an argument very annoying.
