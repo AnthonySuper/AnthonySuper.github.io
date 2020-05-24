@@ -13,6 +13,7 @@ I've very much enjoyed using Haskell, and I figure the best way for me to give b
 In order to do this, we're going to take a fun dive into Haskell errors, why they're confusing, and how they might be improved.
 
 This is very much *not* a literate Haskell file, because none of the snippets within will actually compile!
+You can discuss this post [here](https://gitlab.haskell.org/ghc/ghc/issues/18100).
 
 <!--more-->
 
