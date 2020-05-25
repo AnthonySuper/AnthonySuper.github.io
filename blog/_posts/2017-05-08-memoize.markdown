@@ -32,7 +32,7 @@ class Object
 end
 ```
 
-This works on an instance-level, which a niave implementation wouldn't.
+This works on an instance-level, which a naive implementation wouldn't.
 It also works by re-defining methods on a per-instance basis when you call them, which is just another example of how much Ruby rocks.
 
 Here's how to use it:
