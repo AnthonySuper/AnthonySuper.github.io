@@ -173,7 +173,7 @@ Main.hs:3:14: error:
 This error is going to confuse the hell out of me, for a few reasons:
 
 1. Where the hell did that 'a0' come from? I didn't write that!
-2. Where did these type variables come from? What's the signatures of the funcitons involved?
+2. Where did these type variables come from? What's the signatures of the functions involved?
 3. Why is it suggesting that I give these things all these types?
    I don't understand why this is happening!
 4. It says I should add an explicit type signature, but when I write (`mempty :: (Semigroup a) => Monoid (Maybe a)`) like it suggested, it still breaks!
