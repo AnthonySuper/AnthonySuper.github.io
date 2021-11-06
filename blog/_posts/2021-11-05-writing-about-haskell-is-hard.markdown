@@ -50,7 +50,7 @@ I wanted to write a blog post explaining how Jordan works, and how Haskell helpe
 My first post was a disaster that I discarded.
 Here's a second attempt.
 
-<!-- more -->
+<!--more-->
 
 ## A feeble attempt at sketching the basics
 
