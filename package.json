@@ -2,17 +2,26 @@
   "dependencies": {
     "highlight.js": "^9.12.0",
     "katex": "^0.9.0-alpha1",
-    "react": "^16.3.2",
+    "react": "^16.6",
     "react-dom": "^16.3.2",
     "react-loadable": "^5.3.1",
     "react-lowlight": "^2.0.0",
     "react-markdown": "^3.3.0"
   },
+  "packageManager": "npm",
+  "scripts": {
+    "build": "rollup -c"
+  },
   "type": "module",
   "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@rollup/plugin-babel": "^6.1.0",
     "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-dynamic-import-vars": "^2.1.5",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-replace": "^6.0.3",
     "rollup": "^4.57.1",
     "rollup-plugin-scss": "^4.0.1",
     "sass": "^1.97.3",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Markdown from "./Markdown";
 import "./Highlight.scss";
 
@@ -12,7 +12,7 @@ const source = `
 -- Module      :  Data.Maybe
 -- Copyright   :  (c) The University of Glasgow 2001
 -- License     :  BSD-style (see the file libraries/base/LICENSE)
--- 
+--
 -- Maintainer  :  libraries@haskell.org
 -- Stability   :  stable
 -- Portability :  portable
@@ -63,8 +63,8 @@ import Maybe
 -- The Maybe type, and instances
 
 -- | The 'Maybe' type encapsulates an optional value.  A value of type
--- @'Maybe' a@ either contains a value of type @a@ (represented as @'Just' a@), 
--- or it is empty (represented as 'Nothing').  Using 'Maybe' is a good way to 
+-- @'Maybe' a@ either contains a value of type @a@ (represented as @'Just' a@),
+-- or it is empty (represented as 'Nothing').  Using 'Maybe' is a good way to
 -- deal with errors or exceptional cases without resorting to drastic
 -- measures such as 'error'.
 --
@@ -137,7 +137,7 @@ listToMaybe []        =  Nothing
 listToMaybe (a:_)     =  Just a
 
 -- | The 'catMaybes' function takes a list of 'Maybe's and returns
--- a list of all the 'Just' values. 
+-- a list of all the 'Just' values.
 catMaybes              :: [Maybe a] -> [a]
 catMaybes ls = [x | Just x <- ls]
 
@@ -157,7 +157,7 @@ mapMaybe f (x:xs) =
 #endif /* else not __NHC__ */
 \`\`\`
 `;
-export class Demo extends React.Component {
+export default class Demo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -180,5 +180,3 @@ export class Demo extends React.Component {
     });
   }
 };
-
-export default Demo;
