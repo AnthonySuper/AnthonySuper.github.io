@@ -4,68 +4,6 @@ title: "I guess I kinda get why people hate AI"
 categories: ["ai", "programming"]
 ---
 
-# Outline
-
-- Introduction - "I'm sitting in a hotel in Hawaii, about to start a new job, and wondering if it's going to be my last"
-    - Previously that's because I always wondered if a startup would have an exit
-    - Now wonder if AI is going to take over
-- Background: I get that technology is scary
-    - Briefly mention luddites
-    - Briefly mention the ATM machine thing
-    - Link https://qz.com/1681832/the-history-of-the-future-of-work to
-      show more examples (maybe some joke about how naturally I should like
-      AI, because I'm so lazy I outsourced my intro paragraph or some crap)
-- Paragraph about liking/using AI
-    - Mention that it's helped personal productivity
-    - Mention using it as a nice filter to summarize info on vacation
-    - Some kind of "at its best AI promises to usher in a superintelligence utopia"
-- Some kind of "change is scary but often for the better!" paragraph
-    - Mention that I even used to argue with people around the "humans need not apply" video on Reddit
-- Then a "so why am I starting to get pessimistic?"
-- Title that answers the question: "Everybody in charge of AI is telling me to be a pessimist"
-   - Microsoft's AI CEO is telling me it's going to take my job (https://www.businessinsider.com/microsoft-ai-ceo-mustafa-suleyman-white-collar-tasks-automation-prediction-2026-2)
-   - Sam Altman has said AI will wipe out job categories: (https://www.yahoo.com/news/articles/sam-altman-says-openai-poised-130000116.html)
-   - Matt Shumer compares the current moment of AI to the early-January-2020 rise of COVID, indirectly comparing AI to a pandemic that killed millions (https://x.com/mattshumer_/status/2021256989876109403)
-    - It's not just leaders
-        - Influencers talk about the permanent underclass
-        - Influencers demo AI by going "AI did this benchmark/coding challenege/whatever, we're so cooked chat"
-    - Acknowledge that some AI messaging is more optimistic
-        - Anthropic "worst time to be a problem" ad (https://www.youtube.com/watch?v=FDNkDBNR7AM) - mention the use of "ALL CAPS" by MF DOOM
-    - The overall marketing picture is still extremely bleak
-- New section title: "It's not entirely about the hype"
-    - Personal anecdote about TA friend having to report several students for academic dishonesty
-    - Parents sent me a fake video about Elon Musk making a smarthouse, had to explain it was AI, they were embarrassed and it was awkward
-    - Kind of disturbing AI cat soap operas appear on social media feeds (https://www.theguardian.com/culture/2025/aug/18/ai-has-created-a-new-breed-of-cat-video-addictive-disturbing-and-nauseatingly-quick-soap-operas)
-    - `cURL` removed bug bounties (https://news.ycombinator.com/item?id=46701733)
-    - RAM price apocalypse
-    - AI is helpful for the average person, but it's also causing a lot of real problems, and the only solutions to the problems are irritating
-        - Having to prove you're a human in social media spaces gets rid of anonymity
-        - Having to prevent cheating requires annoying, hand-written tests, which are very different from researched essays
-        - Curating a social media feed is worse when there's a slop firehouse pointed at it ("at least, in the past, somebody had to get an Elsa costume and a Spiderman suit to create such low-quality content")
-        - AI has vastly reduced the friction to create *mediocre to bad* work much more quickly than it has enabled us to create *great* work
-    - Acknowledge that other technologies have done the same (machine loom textiles may not be nice as hand-weaved ones)
-- New section title: "So I guess I get it"
-    - AI is a useful tool with huge potential
-    - The vibes around it are currently very bad
-    - Nobody seems to actually care, but the vibes matter!
-    - It's getting increasingly hard to be optimistic
-        - Even if AI fulfills all its potential, what if only a few people control it, and it's never democratized?
-        - What if it automates all the fulfilling, fun parts of life, and leaves humans to clean toilets?
-        - What if it never takes that next step, and remains mediocre forever?
-    - I'll try to be optimistic anyway
-
-
-As part of this, I also am going to:
-    - Write the article
-    - Send the above outline to Gemini, say "write an article following this outline"
-    - Then tell Gemini "Okay. Now, let's pretend you wrote that outline, but as you actually wrote the piece, things may have changed.
-      So you no longer need to perfectly follow it---as you write, let your muse guide you, so to speak.
-      Go off-script if it feels appropriate, stay on-script when it does not.
-      Like a sculpture carving a marble statue, find the form within."
-    - Send Gemini my actual article, ask it to compare.
-
-# Draft
-
 I'm sitting on a lānai in a hotel in Waikiki beach, writing this article, and wondering if the job I am starting nine days from now will be my last.
 
 This is a unique situation for me in a few ways---I've never been to Hawaii before, I think the five minutes it's taken me to come up with that opening sentence is the somehow the most time I've ever spent on a hotel balcony, and this is the first time I've actually followed through on the "I should delay my start date to take a vacation" idea I've had every time I've switched jobs.
@@ -122,6 +60,7 @@ Before I get into concerns I've found on my own, let me get the most blatantly o
 I've never seen this with any technological development, ever, in my life.
 Henry Ford did not market the Model T as "a machine that will eventually cause environmental destruction, social isolation via car dependency, and health issues from pollution."
 The guy who invented penicillin didn't say "one day this will lead to MRSA."
+People generally try to market new technologies by telling you their upsides, not their downsides.
 
 But Microsoft's AI CEO is saying [AI is going to take everybody's job](https://www.businessinsider.com/microsoft-ai-ceo-mustafa-suleyman-white-collar-tasks-automation-prediction-2026-2).
 And Sam Altman is saying that AI will [wipe out *entire categories* of jobs](https://www.yahoo.com/news/articles/sam-altman-says-openai-poised-130000116.html).
@@ -145,32 +84,57 @@ Or maybe the real message is "you should panic because if you don't invest all y
 I don't know.
 I'm not rich enough to be in that target demographic.
 
+## What if they believe it?
+
+The counter-argument to this is that people aren't marketing, they're just expressing their view of reality.
+Microsoft's AI CEO doesn't *want* AI to ruin millions of lives, but it's going to, so he has to be honest.
+
+Okay, fine.
+If that's the case, I would encourage AI companies to lobby, right now, for world governments to pass legislation to deal with the problem they see on the horizon.
+Now, obviously it would be a bit premature to enact a UBI right now, *before* AI takes over all work, but you don't actually have to: you can pass a law with a trigger condition.
+If unemployment rises above a certain percent while GDP is still growing, have additional taxes start kicking in, used to fund job training or UBI or whatever else you think is needed to prevent the "permanent underclass" from forming in the first place.
+If AI doesn't actually take everybody's jobs, and it winds up being more similar to other technologies, great---the trigger conditions never kick in, and the law stays inactive.
+If the AI jobpocalypse *does* happen, you don't need to scramble to get anything done, the laws to deal with it (or at least help) are already on the books.
+
+I've not seen a single AI CEO propose anything like this.
+Various people have speculated that we might need laws, eventually, after AI takes over everybody's jobs.
+But if we're actually two years out from *every office worker being automated*, which is [57.8% of the workforce](https://www.dpeaflcio.org/factsheets/the-professional-and-technical-workforce-by-the-numbers), we need to start legislating *right now* to have any hope of this not being a total disaster.
+I can only think of three reasons why nobody is proposing this:
+
+1. They are actually far, *far* less confident than they say that AI will actually get that good.
+2. They lack the imagination to think of the idea of passing a law with a trigger condition.
+   Such laws [do exist](https://en.wikipedia.org/wiki/Automatic_stabilizer) but aren't super well-publicized.
+   So this is actually a possibility.
+3. They don't actually care about what their products may do to society---they just want to be sure they win the AI race, damn the consequences.
+
+To me, none of these are a good look.
+
 # AI right now has a few huge downsides
 
 I have a friend who is a new TA at a university in California.
 They've had to report *several students*, every semester, for basically pasting their assignments into ChatGPT.
 
 They didn't find this out via careful analysis, or use of any of the dubious AI detector tools.
-The students literally left in the "would you like me to also do (related thing)?" that every AI puts at the end of their responses.
+The students didn't even try to hide their use of ChatGPT---sometimes they literally left in the "would you like me to also do (related thing)?" that every AI puts at the end of their responses in the essays they submitted.
 Total laziness, but laziness that these students presumably got away with in high school.
 To my friend, their primary experience with AI is seeing students rob themselves of the opportunity to learn, so they can...
 I dunno, hit the vape and watch Clavicular get framemogged, or whatever the hell Gen Z does.
 
 In my own personal experience, my dad enthusiastically sent me a video about Elon's new "smart house" initiative.
-I realized, right away, that the video was AI generated, but I assumed it was a summary of something.
-
+I realized, right away, that the video was AI generated, but I assumed it was a generated summary of some real press release.
 Nope!
-
 Every component of it was made up.
 It was a top-to-bottom scam.
 I researched this for like ten minutes, just to be sure, before gently telling my dad that it was fake.
 He handled it well, apologized, and was clearly embarrassed.
 But why should he be?
-The video had graphics, good narration, music---and all of it was slop bullshit!
+The video had graphics, good narration, music---things that used to be a sign of some degree of effort or sincerity.
+Now, all of those signals are totally worthless.
+AI is able to slop out fake content just as easily.
 
-Then---and this is petty---I've also been subjected to "slop" myself, in the form of bizarre [cat soap opera](https://www.theguardian.com/culture/2025/aug/18/ai-has-created-a-new-breed-of-cat-video-addictive-disturbing-and-nauseatingly-quick-soap-operas) videos that appeared in my tiktok feed.
+Then---and this is petty---I've also been subjected to "slop" myself, in the form of bizarre [cat soap opera](https://www.theguardian.com/culture/2025/aug/18/ai-has-created-a-new-breed-of-cat-video-addictive-disturbing-and-nauseatingly-quick-soap-operas) videos that appeared in my TikTok feed.
 Besides being unpleasant to look at, these shorts have weird racial undertones that are deeply, deeply strange and unsettling to me.
-And even though I do the entire "long press and select 'show less'" thing tiktok provides, they still sneak in, and they frankly irritate to an irrational degree.
+And even though I do the entire "long press and select 'show less'" thing TikTok provides, they still sneak in, and they frankly irritate to an irrational degree.
 
 Then I hear about `cURL` having to [stop their bug bounty program](https://news.ycombinator.com/item?id=46701733) because of so many AI submissions that hallucinate fake bugs.
 Or I look at RAM prices, which have gone completely nuclear, largely because AI companies are buying so much of it.
@@ -211,7 +175,7 @@ It's the actual, day-to-day experience with the technology.
 I'm a programmer---AI actually helps me a *lot*.
 But for normal people, their interactions are profoundly more negative, and none of the people behind this technology seem to care.
 
-And I can't help but wonder... what if the vibes get worse?
+And I can't help but wonder... What if the vibes get worse?
 
 What if I actually lose my job?
 What if I'm begging for change in six months, a new member of the permanent underclass?
