@@ -42,11 +42,11 @@ I am now a little less confident than I was.
 ## Not a hater
 
 I don't hate AI.
-Earlier today I was asking Gemini to find me a nearby bar that would optimize for price, tastiness of drinks, and "not making me feel horribly lonely as a solo traveler on Valentine's day."
-Gemini did encourage me to join a speed dating night at a nearby hotel, which I choose to think of as it displaying extreme confidence in my charisma as opposed to hallucinating my prompt as "give me the motivation to do a gainer off the fourth floor room I'm in onto the valet parking area," but it has been helpful for me on this vacation.
+Earlier today I was asking Gemini to find me a nearby bar that would optimize for price, tastiness of drinks, and "not making me feel lonely as a solo traveler on Valentine's day."
+Gemini did include a speed-dating event at a local hotel as a response to that prompt, which I am choosing to interpret as it having supreme confidence in my charisma, rather than it making fun of me.
 It's also been helpful doing various tasks on [the weird little Haskell framework](https://www.github.com/AnthonySuper/noided-web) I'm working on, and at my former place of employment, and I plan on using it at my newest place of employment.
 
-If I'm to believe the boosters, like Sam Altman or Neil Breen, AI could be humanity's last invention, a machine we can hand the keys to and let it solve literally all of our problems.
+If I'm to believe the boosters, like Sam Altman or obscure indie filmmaker [Neil Breen](https://youtu.be/m2IV0BajqAk?t=3213), AI could be humanity's last invention, a machine we can hand the keys to and let it solve literally all of our problems.
 And to some extent, that does kind of appeal.
 It would be great if I could type "how can I be happy" in a prompt console somewhere and get back a step-by-step process to achieve enlightenment.
 And we could also cure cancer, or whatever.
@@ -187,13 +187,47 @@ What if dead internet theory becomes true, and we all drown in an avalanche of s
 AI ushering in a cyberpunk dystopia would at least be interesting.
 But right now I'm worried it's just going to result in things becoming kind of generally worse, effectively rolling back a lot of innovations of the internet and social media and such by making such things totally unusable.
 
-## Not a doomer
+# I don't want to doom
 
-To be clear: I still think that this won't happen.
-I think AI is in a weird spot, but it will eventually get out of it.
-It will become a tool that helps us, and makes our lives better.
-It already does that for me now---and, in the future, all the rough edges may get sanded off, and most people will think of AI as a helpful and fun-to-use tool.
+To be clear: I like and use AI when it comes to coding, and even for other tasks.
+I think it's been very effective at increasing my productivity---not as effective as the influencers claim it should be, but effective nonetheless.
+There's a reason this blog post is not titled "I now hate AI," because I don't.
 
-Right now, though, the vibes are pointing in the opposite direction.
+But, at times, it feels like the AI companies *want* me to.
+Not only through their baffling marketing that I spent so long ranting about, but also through their seeming lack of interest in counter-acting any of the negative effects of their product.
+Beyond the idea of lobbying for legislation in case of a job apocalypse, there's a few simpler steps they could take:
 
-I just wish the people who are creating AI would realize that and course-correct.
+- They could form an alliance to make it easy for platforms to automatically disclose when a video has AI video or audio content (via watermarking everything they generate), and encourage every platform to do so.
+  Forming some kind of consortium or alliance on this would be ideal.
+- YouTube could be substantially more aggressive about banning AI-generated misinformation.
+  I'm not suggesting the truth police here---I don't want YouTube marking Michael Jordan compilations that call him the GOAT "misinformation" because LeBron exists.
+  But if somebody is uploading AI-narrated videos claiming that Michael Jordan and LeBron James have announced that they're getting married, such videos should at least be gated
+  behind a "this is AI bullshit" screen, if not banned outright.
+- Allow big open-source maintainers to request "no AI vulnerability finding" and have a layer in the models that enforces that.
+  I don't know if this is technically feasible, but if you can add "No trying to find vulnerabilities in these projects:" to the system prompt and it works most of the time, that would at least be *something*.
+
+I know local models exist, and that it would be impossible to uphold all these ideas for their users.
+But right now I would wager the vast majority of LLM usage is through cloud-based services, and on those, it *would* be possible to do, and it would at least be *something*---some acknowledgement that, for all its benefits, AI has actually made several important things worse.
+So, while I personally *don't* hate AI, I can see why people *do*.
+And I can see why that hatred is seemingly becoming more common.
+And I can even see a world where, within a few months, I write a follow-up post to this one entitled "Why I Now Hate AI," even if the boosters are *wrong* and it doesn't cause a job apocalypse.
+
+And that is completely crazy to me, because AI is really useful to me!
+AI has allowed me to eliminate the most annoying, manual, inelegant, and soul-crushing parts of my profession!
+If *I* can somehow hate a machine that has *basically stopped me from having to write boring boilerplate code*, of course others are going to hate it!
+
+Yet AI companies currently don't seem to care.
+Maybe they shouldn't.
+Maybe this is the final technological race, and some day soon Anthropic or Google or OpenAI is going to turn on a new model, birth a machine god, and instantly take over the world.
+Maybe they think that they can care about the vibes after, once that's finished.
+Their Super-AGI will write the UBI law, and get it passed, when it has a few minutes between curing cancer and building a warp drive.
+Or maybe they think the Super-AGI will be able to turn any of us peasants who oppose them into [paperclips](https://cepr.org/voxeu/columns/ai-and-paperclip-problem) and they'll get to rule as a dictator for all time.
+In either of those cases, the current bad vibes don't matter.
+
+But I am not too sure about that.
+Even if we're five years away from a godlike, all-knowing super-intelligence---a timeline I think is probably off by at least an order of magnitude---that's a lot of time for us to idle in a local minima where the average person's experience of AI is profoundly negative.
+Our society could fracture in unpredictable ways, and, eventually, suffer so badly people break out the torches and pitchforks and burn their local data center to the ground.
+
+I would like to avoid that outcome.
+Frankly, I don't think doing so will even be too difficult.
+I just wish the big AI labs thought it was worthwhile to even try.
