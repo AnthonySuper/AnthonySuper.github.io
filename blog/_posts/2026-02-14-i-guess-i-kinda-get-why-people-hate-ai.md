@@ -26,7 +26,7 @@ In my opinion, these changes are mostly for the better---but that's not an opini
 The classical cultural example is the Luddites, a social movement that failed so utterly that its name because a common metaphor for stubborn morons who are terrified of technological innovation that helps everybody.
 Deservedly so, to be clear---while it's true that textile experts did suffer from the advent of mechanical weaving, their loss was far outweighed by the gains the rest of the human race received from being able to afford more than two shirts over the average lifespan.
 
-The other example that comes to mind is the (possibly apocryphal) stories around the rollout of ATM machines, where many supposedly predicted that the number of bankers in the US would collapse now that you could withdraw $20 in singles to leave tips without talking to a person.
+The other example that comes to mind is the (possibly apocryphal) stories around the rollout of ATMs, where many supposedly predicted that the number of bankers in the US would collapse now that you could withdraw $20 in singles to leave tips without talking to a person.
 The exact opposite happened, of course.
 Being able to easily interact with banks, without waiting in a line that's too long for the dum-dum you get at the end to be a real consolation, made people use banks *more*.
 And suddenly tellers became loan managers, and account advisors, and the machine that was supposed to destroy banking employment wound up supercharging it.
