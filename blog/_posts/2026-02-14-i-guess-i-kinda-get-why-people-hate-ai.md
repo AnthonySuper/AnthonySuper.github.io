@@ -80,7 +80,7 @@ But, somehow, "AI is good and will help you" is a less common marketing tactic t
 It's completely fucking baffling to me.
 I can't understand it, unless all those AI marketing materials are really meant for the ultra-wealthy, and not for me.
 "Fund this and you can become a permanent overclass and have millions of enslaved serfs bowing to your machine-god" is, I suppose, an appealing tactic to some kinds of people.
-Or maybe the real message is "you should panic because if you don't invest all your money in letting me buy more RAM right now you'll be a peasant like everybody else" is the real pitch.
+Or maybe the real message is "you should panic because if you don't invest all your money in my company right now you'll be a peasant like everybody else" is the real pitch.
 I don't know.
 I'm not rich enough to be in that target demographic.
 
