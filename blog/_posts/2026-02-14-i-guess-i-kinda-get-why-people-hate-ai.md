@@ -155,6 +155,7 @@ After selecting the "please stop showing me videos of anthropomorphic orange tab
 Eventually somebody else is going to open up a RAM plant when you can get such stupidly high margins on sticks of DDR5.
 
 But all of these solutions are *irritating*, difficult, and, frankly, a lot of work.
+In some cases they're even actively dangerous---considering how often companies [leak information](https://discord.com/press-releases/update-on-security-incident-involving-third-party-customer-service), giving your ID to a website to verify you're not a slop-bot severely increases your data privacy risks.
 Technology is supposed to save you from working.
 For many, AI isn't doing that.
 It's doing the opposite.
