@@ -134,7 +134,7 @@ AI is able to slop out fake content just as easily.
 
 Then---and this is petty---I've also been subjected to "slop" myself, in the form of bizarre [cat soap opera](https://www.theguardian.com/culture/2025/aug/18/ai-has-created-a-new-breed-of-cat-video-addictive-disturbing-and-nauseatingly-quick-soap-operas) videos that appeared in my TikTok feed.
 Besides being unpleasant to look at, these shorts have weird racial undertones that are deeply, deeply strange and unsettling to me.
-And even though I do the entire "long press and select 'show less'" thing TikTok provides, they still sneak in, and they frankly irritate to an irrational degree.
+And even though I do the entire "long press and select 'show less'" thing TikTok provides, they still sneak in, and they frankly irritate me to an irrational degree.
 
 Then I hear about `cURL` having to [stop their bug bounty program](https://news.ycombinator.com/item?id=46701733) because of so many AI submissions that hallucinate fake bugs.
 Or I look at RAM prices, which have gone completely nuclear, largely because AI companies are buying so much of it.
